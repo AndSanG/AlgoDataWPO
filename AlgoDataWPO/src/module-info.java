@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author AndSanGue
+ *
+ */
+module algoDataWPO {
+}
