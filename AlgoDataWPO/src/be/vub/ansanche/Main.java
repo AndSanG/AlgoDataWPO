@@ -6,7 +6,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//WPO.vectorPractice();
-		WPO.linkedListPractice();
+		//WPO.linkedListPractice();
+		ProductsManager demo = new ProductsManager();
+		demo.runDemo();
+		
 
 	}
 	
