@@ -1,4 +1,4 @@
-package be.vub.ansanche;
+package be.vub.ansanche.project;
 
 public class Product {
 	private String productName;

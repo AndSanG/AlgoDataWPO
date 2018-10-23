@@ -1,4 +1,6 @@
-package be.vub.ansanche;
+package be.vub.ansanche.project;
+
+import be.vub.ansanche.dataStructures.Vector;
 
 public class Basket {
 	protected Vector basketList;

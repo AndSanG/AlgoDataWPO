@@ -1,4 +1,4 @@
-package be.vub.ansanche;
+package be.vub.ansanche.dataStructures;
 
 public class LinkedList {
 	

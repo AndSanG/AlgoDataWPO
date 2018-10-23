@@ -1,7 +1,88 @@
 package be.vub.ansanche;
 
+import be.vub.ansanche.dataStructures.*;
+
+
+
 public class WPO {
 	
+	public static void queuePractice(){
+		Queue queue = new Queue();
+		Utilities.println(queue.isEmpty());
+		
+		queue.push(45);
+		queue.push(23);
+		queue.push(17);
+		queue.print();
+		
+		queue.push(76);
+		queue.push(92);
+		queue.print();
+		
+		queue.pop();
+		queue.print();
+	}
+	
+	public static void queuePracticeLL(){
+		QueueLL queue = new QueueLL();
+		Utilities.println(queue.isEmpty());
+		
+		queue.push(45);
+		queue.push(23);
+		queue.push(17);
+		queue.print();
+		
+		queue.push(76);
+		queue.push(92);
+		queue.print();
+		
+		queue.pop();
+		queue.print();
+	}
+	
+	public static void stackPractice() {
+		Stack stack = new Stack();
+		Utilities.println(stack.isEmpty());
+		
+		stack.push(34);
+		stack.push(27);
+		stack.push(83);
+		stack.print();
+		Utilities.println(stack.top());
+		stack.push(58);
+		stack.push(22);
+		
+		stack.print();
+		Utilities.println(stack.top());
+		
+		stack.pop();
+		
+		stack.print();
+		Utilities.println(stack.top());
+		
+	}
+	
+	public static void stackPracticeLL() {
+		StackLL stack = new StackLL();
+		Utilities.println(stack.isEmpty());
+		
+		stack.push(34);
+		stack.push(27);
+		stack.push(83);
+		stack.print();
+		Utilities.println(stack.top());
+		stack.push(58);
+		stack.push(22);
+		
+		stack.print();
+		Utilities.println(stack.top());
+		
+		stack.pop();
+		
+		stack.print();
+		Utilities.println(stack.top());
+		
+	}
 	
 	public static void linkedListPractice() {
 		LinkedList listOne = new LinkedList();

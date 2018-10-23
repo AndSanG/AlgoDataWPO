@@ -1,4 +1,7 @@
-package be.vub.ansanche;
+package be.vub.ansanche.project;
+
+import be.vub.ansanche.Utilities;
+import be.vub.ansanche.dataStructures.Vector;
 
 public class ProductsManager {
 	protected Vector productsList = new Vector(10);
