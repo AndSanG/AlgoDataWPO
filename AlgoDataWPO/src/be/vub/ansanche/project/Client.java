@@ -2,24 +2,24 @@ package be.vub.ansanche.project;
 
 public class Client {
 	
-	private String clientName;
-	private Basket clientBasket;
+	private String name;
+	private Basket basket;
 	
 	public Client(String clientName) {
-		this.setClientName(clientName);
-		this.clientBasket = new Basket();
+		this.setName(clientName);
+		this.basket = new Basket();
 	}
 
-	public String clientName() {
-		return clientName;
+	public String getName() {
+		return name;
 	}
 	
-	private void setClientName(String productName) {
-		this.clientName = productName;
+	private void setName(String productName) {
+		this.name = productName;
 	}
 	
 	public Basket clientBasket() {
-		return clientBasket;
+		return basket;
 	}
 	
 }

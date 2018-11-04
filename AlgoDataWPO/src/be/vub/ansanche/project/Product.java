@@ -1,37 +1,27 @@
 package be.vub.ansanche.project;
 
 public class Product {
-	private String productName;
-	private float productPrice;
-	private int productId;
+	private String name;
+	private int barcodeId;
 	
-	public Product(String productName,float productPrice, int productId, int quantity) {
-		this.setProductName(productName);
-		this.setProductPrice(productPrice);
-		this.setProductId(productId);
+	public Product(String name, int barcodeId) {
+		this.setName(name);
+		this.setBarcodeId(barcodeId);
 	}
 
-	public String productName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public float productPrice() {
-		return productPrice;
+	public int getBarcodeId() {
+		return barcodeId;
 	}
 
-	public void setProductPrice(float productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	public int productId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setBarcodeId(int barcodeId) {
+		this.barcodeId = barcodeId;
 	}
 }

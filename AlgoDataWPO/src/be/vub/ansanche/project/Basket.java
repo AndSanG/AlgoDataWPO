@@ -3,7 +3,7 @@ package be.vub.ansanche.project;
 import be.vub.ansanche.dataStructures.Vector;
 
 public class Basket {
-	protected Vector basketList;
+	private Vector basketList;
 	
 	public Basket() {
 		this.basketList = new Vector(10);

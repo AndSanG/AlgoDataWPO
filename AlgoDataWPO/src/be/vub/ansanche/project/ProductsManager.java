@@ -27,10 +27,10 @@ public class ProductsManager {
 	
 	//Basket
 	public void addProductToBasket(Product product) {
-		client.clientBasket().basketList.addLast(product);
+		client.clientBasket().getBasketProducts().addLast(product);
 	}
 	public void removeProductFromBasket() {
-		client.clientBasket().basketList.removeLast();
+		client.clientBasket().getBasketProducts().removeLast();
 	}
 	
 	
@@ -54,11 +54,11 @@ public class ProductsManager {
 	private void showBasketList(){
 		
 		
-		Utilities.println("Products in " + client.clientName()+"'s Basket :");
+		Utilities.println("Products in " + client.getName()+"'s Basket :");
 		
-		for (int i = 0; i < client.clientBasket().basketList.size(); i++) {
+		for (int i = 0; i < client.clientBasket().getBasketProducts().size(); i++) {
 			Product product = (Product) productsList.get(i);
-			String message = product.productName() + " ";
+			String message = product.getName() + " ";
 			Utilities.print(message); 	
 		} 
 		Utilities.println(" ");
@@ -71,7 +71,7 @@ public class ProductsManager {
 		
 		for (int i = 0; i < productsList.size(); i++) {
 			Product product = (Product) productsList.get(i);
-			String message = product.productName();
+			String message = product.getName();
 			Utilities.println(message); 	
 		} 
 		Utilities.println(" ");
