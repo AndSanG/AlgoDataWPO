@@ -1,8 +1,8 @@
 package be.vub.ansanche.dataStructures;
 
 public class Vector {
-	protected Object data[];
-	protected int count;
+	private Object data[];
+	private int count;
 	
 	public Vector(int capacity)
 	{
