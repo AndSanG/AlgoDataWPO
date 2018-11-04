@@ -6,11 +6,11 @@ private LinkedList data;
 	public QueueLL() {
 		data = new LinkedList();
 	}
-	public void push(Object object) {
+	public void push(Comparable object) {
 		data.addFirst(object);
 	}
-	public Object pop() {
-		Object object = data.getLast();
+	public Comparable pop() {
+		Comparable object = data.getLast();
 		data.removeLast();
 		return object;
 	}

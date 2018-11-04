@@ -6,6 +6,28 @@ import be.vub.ansanche.dataStructures.*;
 
 public class WPO {
 	
+	
+	public static void priorityQueue() {
+		PriorityQueue priorityQueue = new PriorityQueue();
+		priorityQueue.push("First", 4);
+		priorityQueue.push("Second", 2);
+		priorityQueue.push("Third", 3);
+		priorityQueue.push("Fourth", 8);
+		priorityQueue.push("Fifth", 1);
+		priorityQueue.push("Sixth", 4);
+		priorityQueue.push("Seventh", 3);
+		
+		priorityQueue.print();
+		Utilities.println("");
+		
+		Utilities.println( "pop : " +  priorityQueue.pop().toString());
+		
+		Utilities.println("");
+		priorityQueue.print();
+		
+		
+	}
+	
 	public static void queuePractice(){
 		Queue queue = new Queue();
 		Utilities.println(queue.isEmpty());

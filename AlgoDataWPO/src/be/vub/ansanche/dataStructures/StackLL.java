@@ -8,17 +8,17 @@ private LinkedList data;
 		data = new LinkedList();
 	}
 	
-	public void push(Object object) {
+	public void push(Comparable object) {
 		data.addFirst(object);
 	}
 	
-	public Object pop() {
-		Object top = data.getFirst();
+	public Comparable pop() {
+		Comparable top = data.getFirst();
 		data.removeFirst();
 		return top;
 	}
 	
-	public Object top() {
+	public Comparable top() {
 		return data.getFirst();
 	}
 	

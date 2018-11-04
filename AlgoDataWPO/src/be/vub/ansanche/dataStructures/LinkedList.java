@@ -1,21 +1,23 @@
 package be.vub.ansanche.dataStructures;
 
+import java.util.Comparator;
+
 public class LinkedList {
 	
 	private class ListElement {
-		private Object el1;
+		private Comparable el1;
 		private ListElement el2;
 
-		public ListElement(Object el, ListElement nextElement) {
+		public ListElement(Comparable el, ListElement nextElement) {
 			el1 = el;
 			el2 = nextElement;
 		}
 
-		public ListElement(Object el) {
+		public ListElement(Comparable el) {
 			this(el, null);
 		}
 
-		public Object first() {
+		public Comparable first() {
 			return el1;
 		}
 
@@ -23,7 +25,7 @@ public class LinkedList {
 			return el2;
 		}
 
-		public void setFirst(Object value) {
+		public void setFirst(Comparable value) {
 			el1 = value;
 		}
 
@@ -58,7 +60,7 @@ public class LinkedList {
 		return head == null;
 	}
 
-	public Object get(int n) {
+	public Comparable get(int n) {
 		ListElement d = head;
 		while (n > 0) {
 			d = d.rest();
@@ -67,7 +69,7 @@ public class LinkedList {
 		return d.first();
 	}
 	
-	public void set(int n,Object object) {
+	public void set(int n,Comparable object) {
 		ListElement d = head;
 		while (n > 0) {
 			d = d.rest();
@@ -76,7 +78,7 @@ public class LinkedList {
 		d.setFirst(object);
 	}
 
-	public boolean contains(Object object) {
+	public boolean contains(Comparable object) {
 		boolean found = false;
 		ListElement d = head;
 		if(head != null && !this.isEmpty()) {
@@ -90,11 +92,11 @@ public class LinkedList {
 		return found;
 	}
 	
-	public void addFirst(Object object) {
+	public void addFirst(Comparable object) {
 		head = new ListElement(object, head);
 	}
 	
-	public void addLast(Object object){
+	public void addLast(Comparable object){
 		ListElement d = head;
 		if(head != null) {
 			while(d.rest() != null) {
@@ -105,11 +107,11 @@ public class LinkedList {
 		}
 	}
 
-	public Object getFirst() {
+	public Comparable getFirst() {
 		return head.first();
 	}
 	
-	public Object getLast() {
+	public Comparable getLast() {
 		return this.get(size()-1);
 	}
 	public void removeFirst() {
@@ -128,18 +130,59 @@ public class LinkedList {
 				i--;
 			}
 			last.setRest(null);
-		}
-		
+		}	
 	}
 	
-	//reverse
+	public void addSorted(Comparable object) {
+		//an empty list, add element in front 
+		if(head == null) head = new ListElement(object,null);
+		else if (head.first().compareTo(object)>0) {
+			//we have to add the element in front 
+			head = new ListElement(object,head);
+		}else {
+			// we have to find the first element which is bigger 
+			ListElement d = head;
+			while((d.rest() != null)&&(d.rest().first().compareTo(object)<0)) {
+				d = d.rest();
+			}
+			ListElement next = d.rest();
+			d.setRest(new ListElement(object,next));
+		}	
+	}
+	
+	public Object getHighPriorityPair(){
+		
+		ListElement d = head;
+		Object item = d.first();
+		if(head != null) {
+			while(d.rest() != null) {
+				if(d.first().compareTo(item)>0) {
+					item = d.first();
+				}
+			}
+		}
+		return item;
+	}
+	/*public void removeObject(Comparable object) {
+		ListElement d = head;
+		if(head != null) {
+			while(d.rest() != null) {
+				if(d.first().compareTo(item)==0) {
+					
+				}
+			}
+		}
+	}
+	*/
+	
+	
 	//frople
 	public void fropple() {
 		ListElement d = head;
 		int i = (size() % 2 == 0) ? size() : size() - 1;
 		while(i>1) {
 			if(i-- % 2 == 0) {
-				Object temp = d.first();
+				Comparable temp = d.first();
 				d.setFirst(d.rest().first());
 				d.rest().setFirst(temp);
 			}
