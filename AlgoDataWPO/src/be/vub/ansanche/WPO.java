@@ -76,7 +76,7 @@ public class WPO {
 		System.out.println(" index Last[" + circularVector.getLastIndex()+"] : " + circularVector.getLast());
 		circularVector.print();
 		
-		int element = 7;
+		int element = 3;
 		System.out.println("Contains " + element + "? :" + circularVector.contains(element));
 		System.out.println("");
 		

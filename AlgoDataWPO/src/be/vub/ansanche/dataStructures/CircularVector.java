@@ -41,7 +41,7 @@ public class CircularVector
 		for(int i=0;i<count;i++)
 		{
 			int index = (first + i) % data.length;
-			if(data[i] == object) contains = true; 
+			if(data[index] == object) contains = true; 
 		}
 		
 		return contains;
