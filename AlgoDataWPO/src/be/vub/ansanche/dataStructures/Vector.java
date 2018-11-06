@@ -1,5 +1,6 @@
 package be.vub.ansanche.dataStructures;
 
+
 public class Vector {
 	private Object data[];
 	private int count;
@@ -41,7 +42,6 @@ public class Vector {
 	
 	public void addFirst(Object item)
 	{
-		// add your code
 		for(int i = count ; i > 0 ; i--){
 			data[i] = data[i-1];
 		}
@@ -54,38 +54,19 @@ public class Vector {
 		data[count] = object;
 		count++;
 	}
-	
-	/*
-	public boolean binarySearch(Object key)
-	{
-	int start = 0;
-	int end = count - 1;
-	while(start <= end)
-	{
-		int middle = (start + end + 1) / 2;
-		if(key < data[middle]) end = middle -1;
-		else if(key > data[middle]) start = middle + 1;
-		else return true;
-	}
-	return false;
-	}
-	*/
 
 	public Object getFirst()
 	{
-		// add your code
 		return data[0];
 	}
 
 	public Object getLast()
 	{
-		// add your code
 		return data[count-1];
 	}
 
 	public void removeLast()
 	{
-		// add your code
 		for(int i = 0 ; i < count-1 ; i++){
 			data[i] = data[i];
 		}
@@ -94,7 +75,6 @@ public class Vector {
 
 	public void removeFirst()
 	{
-		// add your code
 		for(int i = 0 ; i < count ; i++){
 			data[i] = data[i+1];
 		}
@@ -103,7 +83,6 @@ public class Vector {
 	
 	public void reverse()
 	{
-		// add your code
 		for(int i = 0 ; i < count/2 ; i++){
 			Object aux = data[i];
 			data[i] = data[count-1-i];

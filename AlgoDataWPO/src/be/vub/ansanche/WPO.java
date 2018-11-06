@@ -6,6 +6,106 @@ import be.vub.ansanche.dataStructures.*;
 
 public class WPO {
 	
+	public static void circulaVector() {
+		CircularVector circularVector = new CircularVector(5);
+		System.out.println("isEmpty" + circularVector.isEmpty());
+		
+		System.out.println("Add last : ");
+		circularVector.addLast(1);
+		circularVector.addLast(2);
+		circularVector.addLast(3);
+		circularVector.addLast(4);
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("RemoveFirst : ");
+		circularVector.removeFirst();
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Add last : "); 
+		circularVector.addLast(5);
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Add last : ");		
+		circularVector.addLast(6);
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Remove last : ");
+		circularVector.removeLast();
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("AddFirst : ");
+		circularVector.addFirst(7);
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Remove 2 last : ");
+		circularVector.removeLast();
+		circularVector.removeLast();
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Get First : ");
+		System.out.println(" index First[" + circularVector.getFirstIndex()+"] : " + circularVector.getFirst());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("AddFirst : ");
+		circularVector.addFirst(9);
+		System.out.println(" First index :" + circularVector.getFirstIndex());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Get First : ");
+		System.out.println(" index First[" + circularVector.getFirstIndex()+"] : " + circularVector.getFirst());
+		circularVector.print();
+		System.out.println("");
+		
+		System.out.println("Get Last : ");
+		System.out.println(" index Last[" + circularVector.getLastIndex()+"] : " + circularVector.getLast());
+		circularVector.print();
+		
+		int element = 7;
+		System.out.println("Contains " + element + "? :" + circularVector.contains(element));
+		System.out.println("");
+		
+		element = 1;
+		System.out.println("Contains " + element + "? :" + circularVector.contains(element));
+		System.out.println("");
+		
+		element = 6;
+		int index = 1;
+		circularVector.print();
+		System.out.println("Set " + element + "at index :" + index);
+		circularVector.set(index, element);
+		circularVector.print();
+		System.out.println("");
+		
+		index = 0;
+		circularVector.print();
+		System.out.println("Get element at index " + index +" : " + circularVector.get(index));
+		System.out.println("");
+		
+		
+		System.out.println("Size : " + circularVector.size());
+		
+		
+
+		
+		
+		
+	}
 	
 	public static void priorityQueue() {
 		PriorityQueue priorityQueue = new PriorityQueue();
@@ -18,11 +118,11 @@ public class WPO {
 		priorityQueue.push("Seventh", 3);
 		
 		priorityQueue.print();
-		Utilities.println("");
+		//Utilities.println("");
 		
-		Utilities.println( "pop : " +  priorityQueue.pop().toString());
+		//Utilities.println( "pop : " +  priorityQueue.pop().toString());
 		
-		Utilities.println("");
+		//Utilities.println("");
 		priorityQueue.print();
 		
 		
@@ -30,7 +130,7 @@ public class WPO {
 	
 	public static void queuePractice(){
 		Queue queue = new Queue();
-		Utilities.println(queue.isEmpty());
+		//Utilities.println(queue.isEmpty());
 		
 		queue.push(45);
 		queue.push(23);
@@ -47,7 +147,7 @@ public class WPO {
 	
 	public static void queuePracticeLL(){
 		QueueLL queue = new QueueLL();
-		Utilities.println(queue.isEmpty());
+		//Utilities.println(queue.isEmpty());
 		
 		queue.push(45);
 		queue.push(23);
@@ -64,45 +164,45 @@ public class WPO {
 	
 	public static void stackPractice() {
 		Stack stack = new Stack();
-		Utilities.println(stack.isEmpty());
+		//Utilities.println(stack.isEmpty());
 		
 		stack.push(34);
 		stack.push(27);
 		stack.push(83);
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		stack.push(58);
 		stack.push(22);
 		
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		
 		stack.pop();
 		
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		
 	}
 	
 	public static void stackPracticeLL() {
 		StackLL stack = new StackLL();
-		Utilities.println(stack.isEmpty());
+		//Utilities.println(stack.isEmpty());
 		
 		stack.push(34);
 		stack.push(27);
 		stack.push(83);
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		stack.push(58);
 		stack.push(22);
 		
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		
 		stack.pop();
 		
 		stack.print();
-		Utilities.println(stack.top());
+		//Utilities.println(stack.top());
 		
 	}
 	

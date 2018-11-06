@@ -1,8 +1,6 @@
 package be.vub.ansanche.dataStructures;
 import java.util.Comparator;
 
-import be.vub.ansanche.Utilities;
-
 public class PriorityQueue 
 {       
 	public class PriorityPair implements Comparable
@@ -81,7 +79,7 @@ public class PriorityQueue
 		for (int i = 0; i < data.size(); i++) {
 			PriorityPair pair =  (PriorityPair) data.get(i);
 			String message = pair.element.toString() + pair.priority.toString();
-			Utilities.println(pair);
+			System.out.println(pair);
 		}
 	}
 }

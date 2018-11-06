@@ -1,6 +1,4 @@
 package be.vub.ansanche.project;
-
-import be.vub.ansanche.Utilities;
 import be.vub.ansanche.dataStructures.Vector;
 
 public class ProductsManager {
@@ -8,7 +6,7 @@ public class ProductsManager {
 	protected Client client = new Client("Andres");
 	
 	public void runDemo() {
-		loadProductList();
+		//loadProductList();
 		showProductsList();
 		
 		addProductToBasket((Product)productsList.get(0));
@@ -35,7 +33,9 @@ public class ProductsManager {
 	
 	
 	//Products
+	/*
 	private void loadProductList() {
+		
 		//productId From 501 and so on, could improve
 		Product apple = new Product("Apple", 1, 501, 10);
 		Product bread = new Product("Bread", 2, 502, 5);
@@ -50,30 +50,31 @@ public class ProductsManager {
 		productsList.addLast(cigarrets);
 		
 	}
+	*/
 	
 	private void showBasketList(){
 		
 		
-		Utilities.println("Products in " + client.getName()+"'s Basket :");
+		//Utilities.println("Products in " + client.getName()+"'s Basket :");
 		
 		for (int i = 0; i < client.clientBasket().getBasketProducts().size(); i++) {
 			Product product = (Product) productsList.get(i);
 			String message = product.getName() + " ";
-			Utilities.print(message); 	
+			//Utilities.print(message); 	
 		} 
-		Utilities.println(" ");
-		Utilities.println(" ");
+		//Utilities.println(" ");
+		//Utilities.println(" ");
 	}
 	
 	private void showProductsList(){
 		
-		Utilities.println("Available Products :");	
+		//Utilities.println("Available Products :");	
 		
 		for (int i = 0; i < productsList.size(); i++) {
 			Product product = (Product) productsList.get(i);
 			String message = product.getName();
-			Utilities.println(message); 	
+			//Utilities.println(message); 	
 		} 
-		Utilities.println(" ");
+		//Utilities.println(" ");
 	}
 }

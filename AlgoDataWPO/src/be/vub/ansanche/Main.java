@@ -9,13 +9,14 @@ public class Main {
 		
 		//WPO.vectorPractice();
 		//WPO.linkedListPractice();
-		ProductsManager demo = new ProductsManager();
-		demo.runDemo();
+		//ProductsManager demo = new ProductsManager();
+		//demo.runDemo();
 		//WPO.stackPractice();
 		//WPO.stackPracticeLL();
 		//WPO.queuePractice();
 		//WPO.queuePracticeLL();
 		//WPO.priorityQueue();
+		WPO.circulaVector();
 
 	}
 	
