@@ -1,23 +1,31 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.Vector;
+import be.vub.ansanche.dataStructures.*;
 
 public class Basket {
-	private Vector basketList;
+	private LinkedList products;
 	
 	public Basket() {
-		this.basketList = new Vector(10);
+		this.products = new LinkedList();
 	}
 	
-	public void addProductToBasket(Product product) {
-		basketList.addLast(product);
+	public void addProduct(Product product) {
+		products.addLast(product);
 	}
 	
-	public void removeProductFromBasket(Product product) {
-		//implement
+	public void removeProduct(Product product) {
+		int n = products.size();
+		for (int i = 0; i < n; i++) {
+			Product p = (Product)products.get(i);
+			int com = p.compareTo(product);
+			if(com==0){
+				//System.out.println("afdaf" + product);
+				//products.remove(0);
+			}
+		}
 	}
 	
-	public Vector getBasketProducts() {
-		return basketList;
+	public LinkedList getProducts() {
+		return products;
 	}
 }

@@ -3,7 +3,7 @@ import java.util.Comparator;
 
 public class PriorityQueue 
 {       
-	public class PriorityPair implements Comparable
+	public class PriorityPair implements Comparable 
 	{
 		public Object element;
 		public Object priority;

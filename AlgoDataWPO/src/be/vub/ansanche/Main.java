@@ -9,14 +9,18 @@ public class Main {
 		
 		//WPO.vectorPractice();
 		//WPO.linkedListPractice();
-		//ProductsManager demo = new ProductsManager();
-		//demo.runDemo();
+		GroceryStore demo = new GroceryStore();
+		demo.runDemo();
 		//WPO.stackPractice();
 		//WPO.stackPracticeLL();
 		//WPO.queuePractice();
 		//WPO.queuePracticeLL();
 		//WPO.priorityQueue();
-		WPO.circulaVector();
+		//WPO.circulaVector();
+		//System.out.println("");
+		//WPO.circularListPractice();
+		//WPO.lltest();
+		
 
 	}
 	

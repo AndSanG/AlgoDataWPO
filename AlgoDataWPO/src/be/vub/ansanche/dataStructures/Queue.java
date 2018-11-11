@@ -15,7 +15,7 @@ public class Queue {
 		return object;
 	}
 	public Object top() {
-		return data.getLast();
+		return data.getFirst();///??????
 	}
 	public int size() {
 		return data.size();

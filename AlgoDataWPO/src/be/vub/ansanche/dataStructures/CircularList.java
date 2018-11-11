@@ -1,8 +1,7 @@
 package be.vub.ansanche.dataStructures;
-
 import java.util.Comparator;
 
-public class LinkedList {
+public class CircularList {
 	
 	private class ListElement {
 		private Comparable el1;
@@ -35,11 +34,13 @@ public class LinkedList {
 	}
 	
 	private ListElement head;
+	private ListElement tail;
 	
 	//-----
 	
-	public LinkedList() {
+	public CircularList() {
 		head = null;
+		tail = head;
 	}
 	
 	public int size() {
@@ -47,7 +48,7 @@ public class LinkedList {
 		int size = 0;
 		if(!this.isEmpty()) {
 			size = 1;
-			while (d.rest() != null) {
+			while (d != tail) {
 				d = d.rest();
 				size++;
 			}
@@ -77,21 +78,12 @@ public class LinkedList {
 		}
 		d.setFirst(object);
 	}
-	// need remove 
-	public void remove(int n) {
-		ListElement d = head;
-		while (n > 1) {
-			d = d.rest();
-			n--;
-		}
-		d.setRest(d.rest().rest());
-	}
-	
+
 	public boolean contains(Comparable object) {
 		boolean found = false;
 		ListElement d = head;
 		if(head != null && !this.isEmpty()) {
-			while(d.rest() != null && d.first() != object) {
+			while(d != tail && d.first() != object) {
 				d = d.rest();
 			}
 			if(d.first() == object) {
@@ -100,22 +92,30 @@ public class LinkedList {
 		}
 		return found;
 	}
-	
+	//test pending  
 	public void addFirst(Comparable object) {
-		head = new ListElement(object, head);
+		if (isEmpty()) {
+			head = new ListElement(object, head);
+			tail = head;
+			//tail.setRest(head); maybe needed if head is not allowed to be declared in head 
+		}else {
+			head = new ListElement(object, head);
+		}
 	}
 	
 	public void addLast(Comparable object){
-		ListElement d = head;
-		if(head != null) {
-			while(d.rest() != null) {
-				d = d.rest();
-			}
-			ListElement last = new ListElement(object);
-			d.setRest(last);
-		}else {
-			this.addFirst(object);
+		
+		if(!isEmpty()){
+			
+			System.out.println("addLast" + tail.first());
+			ListElement last = new ListElement(object,head);
+			System.out.println(last);
+			//tail.setRest(last);
+			//tail = last;
+			//System.out.println("addLast" + last.first());
 		}
+		
+		
 	}
 
 	public Comparable getFirst() {
@@ -123,10 +123,10 @@ public class LinkedList {
 	}
 	
 	public Comparable getLast() {
-		return this.get(size()-1);
+		return tail.first();
 	}
 	public void removeFirst() {
-		if(!this.isEmpty()) {
+		if(!isEmpty()) {
 			ListElement d = head;
 			d = d.rest();
 			head = d;
@@ -140,7 +140,7 @@ public class LinkedList {
 				last = last.rest();
 				i--;
 			}
-			last.setRest(null);
+			last.setRest(head);
 		}	
 	}
 	
@@ -202,7 +202,7 @@ public class LinkedList {
 		
 	}
 	
-	public void append(LinkedList list) {
+	public void append(CircularList list) {
 		ListElement element = list.head;
 		if(!list.isEmpty() && !this.isEmpty()){
 			while(element.rest() != null){
