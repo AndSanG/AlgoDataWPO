@@ -59,12 +59,84 @@ public class Tree {
 		}
 	}
 
+	//
+
+	public class TreeNodeXY implements Comparable
+	{
+		protected Comparable x;
+		protected Comparable y;
+		protected TreeNode left1Node;
+		protected TreeNode left2Node;
+		protected TreeNode right1Node;
+		protected TreeNode right2Node;
+
+
+
+		public TreeNodeXY(Comparable x, Comparable y, TreeNode left1Node, TreeNode left2Node, TreeNode right1Node,
+				TreeNode right2Node) {
+			this.x = x;
+			this.y = y;
+			this.left1Node = left1Node;
+			this.left2Node = left2Node;
+			this.right1Node = right1Node;
+			this.right2Node = right2Node;
+		}
+		public TreeNodeXY(Comparable x, Comparable y) {
+			this.x = x;
+			this.y = y;
+			this.left1Node = null;
+			this.left2Node = null;
+			this.right1Node = null;
+			this.right2Node = null;
+		}
+
+		public TreeNodeXY() {
+			this.x = null;
+			this.y = null;
+			this.left1Node = null;
+			this.left2Node = null;
+			this.right1Node = null;
+			this.right2Node = null;
+		}
+
+		public Comparable getX() {
+			return x;
+		}
+
+		public Comparable getY() {
+			return y;
+		}
+
+		public TreeNode getLeft1Node() {
+			return left1Node;
+		}
+
+		public TreeNode getLeft2Node() {
+			return left2Node;
+		}
+
+		public TreeNode getRight1Node() {
+			return right1Node;
+		}
+
+		public TreeNode getRight2Node() {
+			return right2Node;
+		}
+
+		public int compareTo(Object object) {
+			return x.compareTo(((TreeNodeXY)object).x);
+		}
+
+	}
+
+
 	// start of the actual tree class
 	/*
 	 *  public methods  
 	 */
 	// the root of our tree
 	protected TreeNode root;
+	protected TreeNodeXY rootXY;
 
 	public Tree()
 	{
@@ -74,18 +146,18 @@ public class Tree {
 	public boolean find(Comparable element) {
 		return findNode(element, root);
 	}
-	
+
 	public void insert(Comparable element)
 	{
 		insertAtNode(element,root,null);
 	}
-	/*
+
 	public void traverse(TreeAction action)
 	{
-		QueueVector t = new QueueVector();
+		Queue t = new Queue();
 		//Stack t = new Stack();
 		t.push(root);
-		while(!t.empty())
+		while(!t.isEmpty())
 		{
 			TreeNode n = (TreeNode)t.pop();
 			action.run(n);
@@ -93,17 +165,8 @@ public class Tree {
 			if(n.getLeftTree() != null) t.push(n.getLeftTree());
 			if(n.getRightTree() != null) t.push(n.getRightTree());
 		}
-	}*/
-
-	public void traverseNode(TreeNode n,TreeAction action)
-	{
-		if(n != null)
-		{
-			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action); 
-			action.run(n);
-			if(n.getRightTree() != null) traverseNode(n.getRightTree(),action);
-		}
 	}
+
 
 	public void traverseInOrder(TreeAction action)
 	{
@@ -112,22 +175,40 @@ public class Tree {
 
 	public void print()
 	{
-		Stack stack = new Stack();
-		stack.push(root);
-		while(!stack.isEmpty()) {
-			TreeNode treeNode = (TreeNode)stack.pop();
-			System.out.println(treeNode.value);
-			if (treeNode.getRightTree() != null) stack.push(treeNode.getRightTree()); 
-			if (treeNode.getLeftTree() != null)  stack.push(treeNode.getLeftTree());
-		}
+		traverseInOrder(new TreeAction()
+		{
+			public void run(TreeNode n)
+			{
+				System.out.println(n.value);
+			}
+		});
 	}
-	
+
+	public int maxDepth() {
+		return maxDepthNode(root);
+	}
+
+	public Comparable biggest() {
+		return biggestNode(root);
+	}
+
+	public Comparable smallest() {
+		return smallestNode(root);
+	}
+
+	public Comparable smallestX() {
+		return smallestXNode(rootXY);
+	}
+
+	public void swapTree() {
+		swapNode(root);
+	}
 
 	/*
 	 * <<<<<<<<<Private methods>>>>>>>>>>
 	 */
-	
-	
+
+
 	private boolean findNode(Comparable element, TreeNode current) {
 
 		if (current == null) {
@@ -183,6 +264,109 @@ public class Tree {
 		// if the element is bigger than current, go right
 		else insertAtNode(element,current.getRightTree(),current);
 	}
+
+	private void traverseNode(TreeNode n,TreeAction action)
+	{
+		if(n != null)
+		{
+			action.run(n);
+			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action); 
+
+			if(n.getRightTree() != null) traverseNode(n.getRightTree(),action);
+		}
+	}
+
+	int maxDepthNode(TreeNode current)  
+	{ 
+		if (current == null) 
+			return 0; 
+		else 
+		{ 
+			/* compute the depth of each subtree */
+			int leftDepth = maxDepthNode(current.leftNode); 
+			int rightDepth = maxDepthNode(current.rightNode); 
+
+			/* use the larger one */
+			if (leftDepth > rightDepth) 
+				return (leftDepth + 1); 
+			else 
+				return (rightDepth + 1); 
+		} 
+	}
+
+	Comparable biggestNode(TreeNode current) {
+
+		if (current == null) 
+			return Integer.MIN_VALUE; 
+		else 
+		{  
+
+			Comparable value = current.getValue(); 
+			Comparable leftValue = biggestNode(current.leftNode); 
+			Comparable rightValue = biggestNode(current.rightNode); 
+
+			if (leftValue.compareTo(value) > 0) 
+				value = leftValue; 
+			if (rightValue.compareTo(value) > 0) 
+				value = rightValue; 
+			return value;  
+		} 
+	}
+
+	Comparable smallestNode(TreeNode current) {
+
+		if (current == null) 
+			return Integer.MAX_VALUE; 
+		else 
+		{ 
+
+			Comparable value = current.getValue(); 
+			Comparable leftValue = smallestNode(current.leftNode); 
+			Comparable rightValue = smallestNode(current.rightNode); 
+
+			if (leftValue.compareTo(value) < 0) 
+				value = leftValue; 
+			if (rightValue.compareTo(value) < 0) 
+				value = rightValue; 
+			return value;  
+		} 
+	}
+
+	void swapNode(TreeNode current) {
+		if(current == null) {
+			return;
+		}else {
+			TreeNode temp = current.leftNode; 
+			current.leftNode = current.rightNode;
+			current.rightNode = temp;
+			swapNode(current.leftNode);
+			swapNode(current.rightNode);
+		}
+	}
+
+	Comparable smallestXNode(TreeNodeXY current) {
+
+		if (current == null) 
+			return Integer.MAX_VALUE; 
+		else 
+		{ 
+
+			Comparable value = current.getX(); 
+			Comparable left1Value = smallestNode(current.left1Node);
+			Comparable left2Value = smallestNode(current.left2Node);
+			Comparable right1Value = smallestNode(current.right1Node);
+			Comparable right2Value = smallestNode(current.right2Node);
+
+			Tree tree = new Tree();
+			tree.insert(left1Value);
+			tree.insert(left2Value);
+			tree.insert(left1Value);
+			tree.insert(right2Value);
+
+			return tree.smallest();  
+		} 
+	}
+
 
 }
 

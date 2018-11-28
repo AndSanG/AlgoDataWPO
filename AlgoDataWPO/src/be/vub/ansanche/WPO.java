@@ -8,17 +8,24 @@ public class WPO {
 	
 	public static void binaryTree() {
 		Tree tree = new Tree();
-		tree.insert(7);
-		tree.insert(1);
-		tree.insert(5);
+		tree.insert(8);
 		tree.insert(3);
+		tree.insert(1);
 		tree.insert(6);
-		tree.insert(11);
-		tree.insert(2);
-		tree.insert(12);
+		tree.insert(4);
+		tree.insert(7);
 		tree.insert(10);
+		tree.insert(14);
+		tree.insert(13);
 
 		
+		tree.print();
+		System.out.println("Tree depth : " + tree.maxDepth());
+		Object result = tree.biggest();
+		System.out.println("Tree biggest : " + result);
+		Object resultSmall = tree.smallest();
+		System.out.println("Tree smallest : " + resultSmall);
+		tree.swapTree();
 		tree.print();
 	}
 	
