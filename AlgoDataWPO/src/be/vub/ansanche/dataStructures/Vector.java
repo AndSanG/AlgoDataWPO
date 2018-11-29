@@ -100,10 +100,10 @@ public class Vector {
 
 	
 	public void print(){
-		System.out.print("[");
+		System.out.print(" ");
 		for(int i = 0; i<count ;i++){
 			System.out.print(data[i] + " ");
 		}
-		System.out.println("]");
+		System.out.println(" ");
 	}
 }

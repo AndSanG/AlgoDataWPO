@@ -31,13 +31,25 @@ public class ShelfProduct extends Product {
 		this.count = count;
 	}
 	
-	public String toString() {
-		String product =  " (" + this.getBarcodeId() + ") " + this.getName() + "    " +  this.getCount() + " " + String.format("%.2f",getPrice()) + "     " + String.format("%.2f",this.getTotalPrice())+'\n' ;
-		return product;
+	public float getQuantity() {
+		return getCount();
+	}
+	
+	public void setQuantity(float quantity) {
+		setCount((int) quantity);
 	}
 	
 	public float getTotalPrice() {
 		return this.getPrice()*this.getCount();
 	}
 	
+	
+	public String toString() {
+		
+		String product =  String.format("%5s %15s %4s %6.2f %6.2f \n", 
+				this.getBarcodeId(), this.getName(), this.getCount(), getPrice(), this.getTotalPrice());
+		
+		return product;
+	}
+
 }

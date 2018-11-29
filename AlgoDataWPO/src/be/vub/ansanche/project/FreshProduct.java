@@ -30,12 +30,24 @@ public class FreshProduct extends Product{
 		this.amountInKg = amountInKg;
 	}
 	
+	
+	
+	public float getQuantity() {
+		return getAmountInKg();
+	}
+	
+	public void setQuantity(float quantity) {
+		setAmountInKg( quantity);
+	}
+	
 	public float getTotalPrice() {
 		return this.getPricePerKg()*this.getAmountInKg();
 	}
 	
 	public String toString() {
-		String product = this.getName() + " " + this.getPricePerKg() + " " + this.getBarcodeId() + " " + getAmountInKg() +'\n' ;
+		String product =	String.format("%5s %15s %4s %6.2f %6.2f \n", 
+							"~"+this.getBarcodeId(), this.getName(), this.getAmountInKg(), getPricePerKg(), this.getTotalPrice());
+				
 		return product;
 	}
 	

@@ -214,14 +214,14 @@ public class LinkedList {
 	}
 	
 	public String toString() {
-		String s = "(";
+		String s = " ";
 		ListElement d = head;
 		while (d != null) {
 			s += d.first().toString();
 			s += " ";
 			d = d.rest();
 		}
-		s += ")";
+		s += " ";
 		return s;
 	}
 	

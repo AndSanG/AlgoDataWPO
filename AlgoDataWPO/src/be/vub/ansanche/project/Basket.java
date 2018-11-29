@@ -14,15 +14,18 @@ public class Basket {
 	}
 	
 	public void removeProduct(Product product) {
-		int n = products.size();
-		for (int i = 0; i < n; i++) {
-			Product p = (Product)products.get(i);
-			int com = p.compareTo(product);
-			if(com==0){
-				//System.out.println("afdaf" + product);
-				//products.remove(0);
+		
+		int code = product.getBarcodeId();
+		product = new Product(code);
+		for (int i = 0; i < products.size(); i++) {
+
+			Product p = (Product) products.get(i);
+			boolean comparison = product.compareTo(p)==0;
+			if(comparison) {
+				products.remove(i);
 			}
 		}
+		
 	}
 	
 	public LinkedList getProducts() {

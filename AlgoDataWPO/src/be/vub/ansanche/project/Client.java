@@ -4,7 +4,7 @@ public class Client implements Comparable<Client> {
 	
 	private String name;
 	private int id;
-	public Basket basket;
+	private Basket basket;
 	
 	public Client(String clientName, int id){
 		this.setName(clientName);
@@ -31,9 +31,28 @@ public class Client implements Comparable<Client> {
 	public int getId() {
 		return id;
 	}
-
+	// TODO set the id on the builder and do not allow to change form outside
+	// there must be a place where the numbers are stored 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Basket getBasket() {
+		return basket;
+	}
+
+	public void setBasket(Basket basket) {
+		this.basket = basket;
+	}
+
+	public boolean equals(Object object) {
+		if(this == object) return true;
+		else if (this == null || getClass() != object.getClass()) return false;
+		else if (object instanceof Client) {
+			Client client = (Client) object;
+			if(client.getId() == id) return true;
+		}
+		return false;
 	}
 	
 	public String toString() {

@@ -9,8 +9,8 @@ public class Main {
 		
 		//WPO.vectorPractice();
 		//WPO.linkedListPractice();
-		//GroceryStore demo = new GroceryStore();
-		//demo.runDemo();
+		GroceryStore demo = new GroceryStore();
+		demo.runDemo();
 		//WPO.stackPractice();
 		//WPO.stackPracticeLL();
 		//WPO.queuePractice();

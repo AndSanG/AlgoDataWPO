@@ -1,7 +1,7 @@
 package be.vub.ansanche.project;
 
 import be.vub.ansanche.dataStructures.*;
-import be.vub.ansanche.project.FreshProductOrder;
+import be.vub.ansanche.project.ProductOrder;
 
 public class GroceryStoreManager implements GroceryStoreInterface{
 
@@ -18,7 +18,7 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 		clientNumber = 0;
 	}
 
-	public void addProduct(String name, float price, int barcodeId, int count) {
+	public void addProduct(String department, String name, float price, int barcodeId, int count) {
 		Product product = new ShelfProduct(name, barcodeId, price, count);
 		shelfProducts.addFirst(product);
 	}
@@ -38,156 +38,190 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 
 
 	public void addToBasket(int barcodeId, int count, int customerId) {
+
 		//search for the product in the list
-		ShelfProduct product = new ShelfProduct(barcodeId,count);
-		for (int i = 0; i < shelfProducts.size(); i++) {
-			ShelfProduct p = (ShelfProduct) shelfProducts.get(i); 
-			if(product.compareTo(p)==0) {
-				//fetch information for the product
-				product.setName(p.getName());
-				product.setPrice(p.getPrice());
-				//decrease number in grocery store list
-				p.setCount(p.getCount()-product.getCount());
-			}
-			
-			
-		}
+		Product product = (Product)searchProduct(barcodeId, shelfProducts).clone();
+
+		//check if the search do not match a product
+		if(product == null) 
+			return;
+
+		//set the quantity
+		product.setQuantity(count);
+
 		//search for the client in the list
-		Client c = new Client(customerId);
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = (Client) clientList.get(i);
-			if(c.compareTo(client)==0) {
-				//Check if the client has previously added the product
-				int n = client.basket.getProducts().size();
-				if(n==0) {
-					client.basket.addProduct(product);
-				}else {
-					boolean shouldAdd = true;
-					for (int j = 0; j < client.basket.getProducts().size(); j++) {
-						ShelfProduct p = (ShelfProduct)client.basket.getProducts().get(j);
-						if(product.compareTo(p)==0) {
-							shouldAdd = false;
-							p.setCount(p.getCount()+product.getCount());
-						}
-					}
-					if(shouldAdd) {
-						client.basket.addProduct(product);
-					}
-				}
-			}
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+
+		//check if the product was previously added
+		Product pBasket = searchProduct(barcodeId, client.getBasket().getProducts());
+		if(pBasket==null) {
+			//add the product the first time
+			client.getBasket().addProduct(product);
+		}else {
+			//modify the quantity of the product
+			pBasket.setQuantity(pBasket.getQuantity()+product.getQuantity());
 		}
-		//decrease the number from database
-		
+
+		//update the inventory
+		Product pInventory = (Product)searchProduct(barcodeId, shelfProducts);
+		pInventory.setQuantity(pInventory.getQuantity()-product.getQuantity());
+
 	}
 
-	public void removeFromBasket(int barcodeId, int count, int customerId) {
-		
-		ShelfProduct product = new ShelfProduct(barcodeId,count);
-		for (int i = 0; i < shelfProducts.size(); i++) {
-			ShelfProduct p = (ShelfProduct) shelfProducts.get(i); 
-			if(product.compareTo(p)==0) {
-				//increase number in grocery store list
-				p.setCount(p.getCount()+product.getCount());
-			}
-			
-			
-		}
-		//search for the client in the list
-		Client c = new Client(customerId);
-		int n = clientList.size();
+	public Product searchProduct(int barcodeId, LinkedList list) {
+		Product product = new Product(barcodeId);
+		for (int i = 0; i < list.size(); i++) {
 
-		for (int i = 0; i < n ; i++) {
-			Client client = (Client) clientList.get(i);
-			int m = client.basket.getProducts().size();
-			if(c.compareTo(client)==0 && m!=0) {
-				for (int j = 0; j < m; j++) {
-					ShelfProduct basketProduct = (ShelfProduct)client.basket.getProducts().get(j);
-					if (product.compareTo(basketProduct)==0) {
-						basketProduct.setCount(basketProduct.getCount()-product.getCount());
-						if(basketProduct.getCount()<=0) {
-							client.basket.removeProduct(basketProduct);
-						}
-					}
-				}
+			Product p = (Product) list.get(i);
+			boolean comparison = product.compareTo(p)==0;
+			if(comparison) {
+				product = p;
+				return product;
 			}
-		}	
+		}
+		return null;
+	}
+
+	public Client searchClient(int customerId, LinkedList list) {
+		Client client = new Client(customerId);
+		for (int i = 0; i < list.size(); i++) {
+			Client c = (Client) list.get(i);
+			if(client.equals(c)) {
+				client = c;
+				return client;
+			}
+		}
+		return null;
+	}
+
+
+	public void removeFromBasket(int barcodeId, int count, int customerId) {
+
+		
+
+		//search for the client in the list
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+
+		//get the product 
+		Product basketProduct = (Product)searchProduct(barcodeId, client.getBasket().getProducts());
+		if(basketProduct == null) 
+			return;
+		
+		// control the count
+		if (basketProduct.getQuantity()<count) {
+			return;
+		}
+
+		//modify product number if there is less than zero remove from the basket 
+		basketProduct.setQuantity(basketProduct.getQuantity()-count);
+		if(basketProduct.getQuantity()<=0) {
+			client.getBasket().removeProduct(basketProduct);
+		}
+		
+		Product productInventory = (Product)searchProduct(barcodeId, shelfProducts);
+		productInventory.setQuantity(productInventory.getQuantity()+count);
+
 	}
 
 	public void printBasket(int customerId) {
-		Client c = new Client(customerId);
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = (Client) clientList.get(i);
-			if(c.compareTo(client)==0) {
-				System.out.println(client.getName() + "'s basket : \n" + client.basket.getProducts());
-			}
-		}	
 
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+
+		System.out.println(client.getName() + "'s basket : ");
+		String header = String.format("%6s %15s %4s %6s %6s ", 
+				"Code", " Product Name", "Q ", "P Uni", "Total" );
+		System.out.println("--------------------------------------------");
+		System.out.println(header);
+		System.out.println("--------------------------------------------");
+		System.out.println(client.getBasket().getProducts());
+		System.out.println("--------------------------------------------");
+		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
+		
 	}
 
 	public float computeBasketPrice(int customerId) {
 		float total = 0;
-		Client c = new Client(customerId);
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = (Client) clientList.get(i);
-			if(c.compareTo(client)==0) {
-				int n = client.basket.getProducts().size();
-				for (int j = 0; j < n; j++) {
-					Product product= (Product) client.basket.getProducts().get(j);
-					total += product.getTotalPrice();
-				}
-			}
+
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return 0;
+
+		int n = client.getBasket().getProducts().size();
+		for (int j = 0; j < n; j++) {
+			Product product= (Product) client.getBasket().getProducts().get(j);
+			total += product.getTotalPrice();
 		}
+		
 		return total;
 	}
 
 
 	public void requestFreshProduct(int barcodeId, float amount, int customerId) {
-		FreshProduct freshProduct = new FreshProduct(barcodeId,amount);
-		for (int i = 0; i < freshProducts.size(); i++) {
-			FreshProduct p = (FreshProduct) freshProducts.get(i); 
-			if(freshProduct.compareTo(p)==0) {
-				//fetch information for the product
-				freshProduct.setName(p.getName());
-				freshProduct.setPricePerKg(p.getPricePerKg());
-			}
-			FreshProductOrder order = new FreshProductOrder(freshProduct, customerId);
-			freshProductsQueue.push(order);
-		}
+		ProductOrder order = new ProductOrder(barcodeId,amount,customerId);
+		freshProductsQueue.push(order);
 	}
 
 	public boolean serveNextRequest() {
-		boolean served =false;
-		if(freshProductsQueue.size()>0) {
-			FreshProductOrder order = (FreshProductOrder)freshProductsQueue.pop();
-			for (int i = 0; i < freshProducts.size(); i++) {
-				FreshProduct p = (FreshProduct) freshProducts.get(i); 
-				if(order.getFreshProduct().compareTo(p)==0) {
-					//fetch information for the product
-					if (order.getFreshProduct().getAmountInKg()<p.getAmountInKg()) {
-						//add to client basket
-						Client c = new Client(order.getClientId());
-						for (int j = 0; j < clientList.size(); j++) {
-							Client client = (Client) clientList.get(j);
-							if(c.compareTo(client)==0) {
-								client.basket.addProduct(order.getFreshProduct());
-							}
-						}
-						served = true ;
-						//decrease number in grocery store list
-						p.setAmountInKg(p.getAmountInKg()-order.getFreshProduct().getAmountInKg());
-					}else {
-						freshProductsQueueUnatended.push(order);
-					}	
-				}
-			}
-	
+
+		if(!(freshProductsQueue.size()>0))
+			return false;
+		
+		ProductOrder order = (ProductOrder)freshProductsQueue.pop();
+		if(order == null) 
+			return false;
+		
+		Product productStock = searchProduct(order.getProductId(), freshProducts);
+		if(productStock == null) 
+			return false;
+		
+		Product product = (Product) productStock.clone();
+		product.setQuantity(order.getAmount());
+		
+		if(product.getQuantity()>productStock.getQuantity()) {
+			freshProductsQueueUnatended.push(order);
+			return false;
 		}
-		return served;
+		
+		Client client = searchClient(order.getClientId(), clientList);
+		if(client == null)
+			return false;
+		
+		client.getBasket().addProduct(product);
+		
+		productStock.setQuantity(productStock.getQuantity()-product.getQuantity());
+		
+		return true;
+		
 	}
 
-	public void printUnservedRequests() {
-		freshProductsQueueUnatended.print();
+	public void printRequests() {
+		if (freshProductsQueue.size()>0) {
+			System.out.println("Fresh Product Queue");
+			freshProductsQueue.print();
+		}else {
+			System.out.println("There is no orders left");
+		}
+		
 	}
+	
+	public void printUnservedRequests() {
+		
+		if (freshProductsQueueUnatended.size()>0) {
+			System.out.println("Fresh Product Not served ");
+			freshProductsQueueUnatended.print();
+		}else {
+			System.out.println("There is no unserved oreders");
+		}
+		
+	}
+	
+	
 
 
 	//extra methods 
@@ -201,6 +235,21 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 
 	public LinkedList getClientList() {
 		return clientList;
+	}
+
+	public void addDepartment(String departmentName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void checkout(int customerId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void printShoppingHistory(int customerId) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -1,16 +1,18 @@
 package be.vub.ansanche.project;
+
 public interface GroceryStoreInterface {
 
 	
 	/**
 	 * Adds a product to the store 
 	 * 
+	 * @param department - represents a department to which is the product added
 	 * @param name - represents the name of the new product
 	 * @param price - represents the price of the new product
 	 * @param barcodeId - is the bar-code number of the new product 
 	 * @param count - is the number of items of the new product in the store
 	 */
-	void addProduct(String name, float price, int barcodeId, int count);
+	void addProduct(String department, String name, float price, int barcodeId, int count);
 	
 	/**
 	 * Adds a fresh product to the store
@@ -90,5 +92,27 @@ public interface GroceryStoreInterface {
 	 * This method will print currently unserved requests that are waiting to be processed 
 	 */
 	void printUnservedRequests();
+	
+	/**
+	 * This method adds a new department to the store
+	 * 
+	 * @param departmentName - is the name of the department that is added to the store
+	 */
+	void addDepartment(String departmentName);
+	
+	/**
+	 * Checkouts specified client and prints a bill.
+	 * 
+	 * @param customerId - the client id of the client that checkouts the items from the
+	 *     basket and finalizes the purchase 
+	 */
+	void checkout(int customerId);
+	
+	/**
+	 * Prints a summary of previous purchases
+	 * 
+	 * @param customerId - the client id for which the shopping history will be printed
+	 */
+	void printShoppingHistory(int customerId);
 	
 }
