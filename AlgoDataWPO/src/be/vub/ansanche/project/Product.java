@@ -1,16 +1,19 @@
 package be.vub.ansanche.project;
 
 public class Product implements Comparable <Product>, Cloneable{
+	private String department;
 	private String name;
 	private int barcodeId;
 	
-	public Product(String name, int barcodeId) {
+	public Product(String department, String name, int barcodeId) {
+		this.setDepartment(department);
 		this.setName(name);
 		this.setBarcodeId(barcodeId);
 	}
 	
 	public Product(int barcodeId) {
 		this.setName("");
+		this.setDepartment("");
 		this.setBarcodeId(barcodeId);
 	}
 	
@@ -31,7 +34,14 @@ public class Product implements Comparable <Product>, Cloneable{
 		this.barcodeId = barcodeId;
 	}
 	
-	
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
 	// generic functions
 	public void setQuantity(float quantity) {}
 	

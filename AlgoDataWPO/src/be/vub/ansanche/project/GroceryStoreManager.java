@@ -5,6 +5,7 @@ import be.vub.ansanche.project.ProductOrder;
 
 public class GroceryStoreManager implements GroceryStoreInterface{
 
+	private LinkedList departments = new LinkedList();
 	private LinkedList shelfProducts = new LinkedList();
 	private LinkedList freshProducts = new LinkedList();
 	private LinkedList clientList = new LinkedList();
@@ -19,12 +20,12 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 	}
 
 	public void addProduct(String department, String name, float price, int barcodeId, int count) {
-		Product product = new ShelfProduct(name, barcodeId, price, count);
+		Product product = new ShelfProduct(department, name, barcodeId, price, count);
 		shelfProducts.addFirst(product);
 	}
 
 	public void addFreshProduct(String name, float pricePerKg, int barcodeId, float amountInKg) {
-		Product freshProduct = new FreshProduct(name, barcodeId, pricePerKg, amountInKg);	
+		Product freshProduct = new FreshProduct("Fresh", name, barcodeId, pricePerKg, amountInKg);	
 		freshProducts.addFirst(freshProduct);
 	}
 
@@ -99,8 +100,6 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 
 	public void removeFromBasket(int barcodeId, int count, int customerId) {
 
-		
-
 		//search for the client in the list
 		Client client = searchClient(customerId, clientList);
 		if(client == null)
@@ -134,13 +133,13 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 			return;
 
 		System.out.println(client.getName() + "'s basket : ");
-		String header = String.format("%6s %15s %4s %6s %6s ", 
-				"Code", " Product Name", "Q ", "P Uni", "Total" );
-		System.out.println("--------------------------------------------");
+		String header = String.format("%6s %30s %10s %6s %6s ", 
+				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
+		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
-		System.out.println("--------------------------------------------");
+		System.out.println("----------------------------------------------------------------");
 		System.out.println(client.getBasket().getProducts());
-		System.out.println("--------------------------------------------");
+		System.out.println("----------------------------------------------------------------");
 		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
 		
 	}
@@ -221,7 +220,43 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 		
 	}
 	
-	
+	public void addDepartment(String departmentName) {
+		this.departments.addFirst(departmentName);
+	}
+
+	public void checkout(int customerId) {
+		//print the items 
+		printBasket(customerId);
+		
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+		
+		//addItems to customer history
+		client.addOrder(client.getBasket().getProducts());
+		//remove items form basket 
+		client.setBasket(new Basket());
+	}
+
+	public void printShoppingHistory(int customerId) {
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+		
+		System.out.println(client.getName() + "'s previous orders : ");
+		
+		Vector orderHistory = client.getOrderHistory();
+		for (int i = 0; i < orderHistory.size(); i++) {
+			String header = String.format("%6s %30s %10s %6s %6s ", 
+					"Code", " Product Name", "Quantity ", "P Uni", "Total" );
+			System.out.println("----------------------------------------------------------------");
+			System.out.println(header);
+			System.out.println("----------------------------------------------------------------");
+			orderHistory.print();
+			System.out.println("----------------------------------------------------------------");
+			System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
+		}
+	}
 
 
 	//extra methods 
@@ -237,19 +272,11 @@ public class GroceryStoreManager implements GroceryStoreInterface{
 		return clientList;
 	}
 
-	public void addDepartment(String departmentName) {
-		// TODO Auto-generated method stub
-
+	public LinkedList getDepartments() {
+		return departments;
 	}
+	
 
-	public void checkout(int customerId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void printShoppingHistory(int customerId) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

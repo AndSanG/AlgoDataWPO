@@ -20,7 +20,8 @@ public class Main {
 		//System.out.println("");
 		//WPO.circularListPractice();
 		//WPO.lltest();
-		WPO.binaryTree();
+		//WPO.binaryTree();
+		//CSVReader.test();
 		
 
 	}

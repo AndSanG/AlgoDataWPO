@@ -6,13 +6,13 @@ public class ShelfProduct extends Product {
 	private int count;
 	
 
-	public ShelfProduct(String name, int barcodeId, float price, int count) {
-		super(name, barcodeId);
+	public ShelfProduct(String department, String name, int barcodeId, float price, int count) {
+		super(department, name, barcodeId);
 		this.price = price;
 		this.count = count;
 	}
 	public ShelfProduct(int barcodeId,int count) {
-		this("",barcodeId,0f,count);
+		this("","",barcodeId,0f,count);
 	}
 
 	public float getPrice() {
@@ -46,8 +46,8 @@ public class ShelfProduct extends Product {
 	
 	public String toString() {
 		
-		String product =  String.format("%5s %15s %4s %6.2f %6.2f \n", 
-				this.getBarcodeId(), this.getName(), this.getCount(), getPrice(), this.getTotalPrice());
+		String product =  String.format("%5s %30s %10s %6.2f %6.2f \n", 
+				this.getBarcodeId(), "{"+this.getDepartment()+"}  " + this.getName(), this.getCount(), getPrice(), this.getTotalPrice());
 		
 		return product;
 	}

@@ -1,15 +1,19 @@
 package be.vub.ansanche.project;
 
+import be.vub.ansanche.dataStructures.*;
+
 public class Client implements Comparable<Client> {
 	
 	private String name;
 	private int id;
 	private Basket basket;
+	private Vector orderHistory;
 	
 	public Client(String clientName, int id){
 		this.setName(clientName);
 		this.setId(id);
 		this.basket = new Basket();
+		this.orderHistory = new Vector(10);
 	}
 	
 	public Client(int id){
@@ -44,6 +48,14 @@ public class Client implements Comparable<Client> {
 	public void setBasket(Basket basket) {
 		this.basket = basket;
 	}
+	
+	public Vector getOrderHistory() {
+		return orderHistory;
+	}
+
+	public void addOrder(LinkedList order) {
+		this.orderHistory.addFirst(order);
+	}
 
 	public boolean equals(Object object) {
 		if(this == object) return true;
@@ -59,6 +71,5 @@ public class Client implements Comparable<Client> {
 		String client = this.getId() + " " + this.getName() + '\n';
 		return client;
 	}
-
 	
 }
