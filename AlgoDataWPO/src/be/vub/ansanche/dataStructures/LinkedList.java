@@ -42,6 +42,23 @@ public class LinkedList {
 		head = null;
 	}
 	
+	public void addFirst(Comparable object) {
+		head = new ListElement(object, head);
+	}
+	
+	public Comparable getFirst() {
+		return head.first();
+	}
+
+	public Comparable get(int n) {
+		ListElement d = head;
+		while (n > 0) {
+			d = d.rest();
+			n--;
+		}
+		return d.first();
+	}
+	
 	public int size() {
 		ListElement d = head;
 		int size = 0;
@@ -60,14 +77,6 @@ public class LinkedList {
 		return head == null;
 	}
 
-	public Comparable get(int n) {
-		ListElement d = head;
-		while (n > 0) {
-			d = d.rest();
-			n--;
-		}
-		return d.first();
-	}
 	
 	public void set(int n,Comparable object) {
 		ListElement d = head;
@@ -77,7 +86,7 @@ public class LinkedList {
 		}
 		d.setFirst(object);
 	}
-	// need remove 
+	
 	public void remove(int n) {
 		ListElement d = head;
 		while (n > 1) {
@@ -101,10 +110,6 @@ public class LinkedList {
 		return found;
 	}
 	
-	public void addFirst(Comparable object) {
-		head = new ListElement(object, head);
-	}
-	
 	public void addLast(Comparable object){
 		ListElement d = head;
 		if(head != null) {
@@ -118,13 +123,12 @@ public class LinkedList {
 		}
 	}
 
-	public Comparable getFirst() {
-		return head.first();
-	}
-	
+		
 	public Comparable getLast() {
 		return this.get(size()-1);
 	}
+	
+	
 	public void removeFirst() {
 		if(!this.isEmpty()) {
 			ListElement d = head;
@@ -132,6 +136,8 @@ public class LinkedList {
 			head = d;
 		}
 	}
+	
+	
 	public void removeLast() {
 		ListElement last = head;
 		if(!this.isEmpty()){
@@ -143,6 +149,7 @@ public class LinkedList {
 			last.setRest(null);
 		}	
 	}
+	
 	
 	public void addSorted(Comparable object) {
 		//an empty list, add element in front 
@@ -213,6 +220,10 @@ public class LinkedList {
 		}
 	}
 	
+	public void print(){
+		System.out.println(this.toString());
+	}
+	
 	public String toString() {
 		String s = " ";
 		ListElement d = head;
@@ -224,9 +235,6 @@ public class LinkedList {
 		s += " ";
 		return s;
 	}
-	
-
-	
 
 }
 
