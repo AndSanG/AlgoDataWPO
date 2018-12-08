@@ -25,7 +25,11 @@ private LinkedList data;
 	}
 	
 	public void print() {
-		System.out.println(data);
+		data.print();
+	}
+	
+	public String toString() {
+		return data.toString();
 	}
 
 }

@@ -33,6 +33,10 @@ public class Stack {
 		data.print();
 	}
 	
+	public String toString() {
+		return data.toString();
+	}
+	
 
 }
 

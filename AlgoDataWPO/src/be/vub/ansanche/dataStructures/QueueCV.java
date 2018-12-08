@@ -25,9 +25,12 @@ public class QueueCV {
 		return data.isEmpty();
 	}
 	
-	
 	public void print() {
 		data.print();
+	}
+	
+	public String toString() {
+		return data.toString();
 	}
 	
 }

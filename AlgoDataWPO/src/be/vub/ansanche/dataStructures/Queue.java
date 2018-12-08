@@ -28,4 +28,8 @@ public class Queue {
 		data.print();
 	}
 	
+	public String toString() {
+		return data.toString();
+	}
+	
 }
