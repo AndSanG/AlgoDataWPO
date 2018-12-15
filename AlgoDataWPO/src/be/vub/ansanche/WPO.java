@@ -6,6 +6,20 @@ import be.vub.ansanche.dataStructures.*;
 
 public class WPO {
 	
+	public static void matrixGraph() {
+		MatrixGraph graph = new MatrixGraph(6);
+		graph.addEdge(1, 2, 1);
+		graph.addEdge(1, 4, 1);
+		graph.addEdge(2, 5, 1);
+		graph.addEdge(4, 2, 1);
+		graph.addEdge(5, 4, 1);
+		graph.addEdge(3, 5, 1);
+		graph.addEdge(3, 6, 1);
+		graph.addEdge(6, 6, 1);
+	
+		graph.print();
+	}
+
 	public static void binaryTree() {
 		Tree tree = new Tree();
 		tree.insert(8);
@@ -42,8 +56,8 @@ public class WPO {
 		listOne.remove(6);
 		System.out.println(listOne);
 		System.out.println(listOne.get(2));
-		}
-	
+	}
+
 	public static void circularListPractice() {
 		CircularList listOne = new CircularList();
 		listOne.addFirst(6);
@@ -235,18 +249,31 @@ public class WPO {
 		priorityQueue.push("Fifth", 1);
 		priorityQueue.push("Sixth", 4);
 		priorityQueue.push("Seventh", 3);
-		
 		priorityQueue.print();
-		//Utilities.println("");
-		
-		//Utilities.println( "pop : " +  priorityQueue.pop().toString());
-		
+		System.out.println("pop : " +  priorityQueue.pop().toString());
+
 		//Utilities.println("");
 		priorityQueue.print();
-		
-		
+
+
 	}
 	
+	public static void priorityQueueUnsortedLL() {
+		PriorityQueue priorityQueue = new PriorityQueue();
+		priorityQueue.pushUnsorted("First", 1);
+		priorityQueue.pushUnsorted("Second", 2);
+		priorityQueue.pushUnsorted("Third", 3);
+		priorityQueue.pushUnsorted("Fourth", 8);
+		priorityQueue.pushUnsorted("Fifth", 2);
+		priorityQueue.pushUnsorted("Sixth", 4);
+		priorityQueue.pushUnsorted("Seventh", 4);
+		priorityQueue.print();
+		System.out.println("pop : " +  priorityQueue.topUnsorted());
+		priorityQueue.popUnsorted();
+				//().toString());
+		//priorityQueue.print();
+	}
+
 	public static void queuePractice(){
 		Queue queue = new Queue();
 		//Utilities.println(queue.isEmpty());
@@ -288,6 +315,10 @@ public class WPO {
 		stack.push(34);
 		stack.push(27);
 		stack.push(83);
+		stack.push(83);
+		stack.push(83);
+		stack.push(83);
+		
 		stack.print();
 		//Utilities.println(stack.top());
 		stack.push(58);
@@ -337,20 +368,20 @@ public class WPO {
 		
 		//1 Create List
 		System.out.println("1) List One    : " + listOne);
-		System.out.println("   List First  : " + listOne.getFirst());
-		System.out.println("   List Get at : " + listOne.get(3));
+		System.out.println("   List First  :  " + listOne.getFirst());
+		System.out.println("   List Get at :  " + listOne.get(3));
 		//2 List Size
-		System.out.println("2) Size        : " + listOne.size());
+		System.out.println("2) Size        :  " + listOne.size());
 		//3) set element at nth
 		listOne.set(2,2);
 		System.out.println("3) List One 2  : " + listOne);
 		//4) get last
-		System.out.println("4) get Last    : " + listOne.getLast());
+		System.out.println("4) get Last    :  " + listOne.getLast());
 		//5) add last
 		listOne.addLast(8);
 		System.out.println("5) List One 3  : " + listOne);
 		//6) search in a Linked List
-		System.out.println("6) Search in LL: " + listOne.contains(7));
+		System.out.println("6) Search in LL:  " + listOne.contains(7));
 		//7 implement remove first and remove last
 		listOne.removeFirst();
 		System.out.println("7) remove first: " + listOne);
@@ -373,7 +404,20 @@ public class WPO {
 		
 		
 	}
+
+	public static void vectorPractice2() {
 	
+		//9 extend capacity
+		Vector vectorFour = new Vector(3);
+		for(int i = 4; i<=6 ;i++){
+			vectorFour.addLast(i);
+		}
+		//vectorFour.print();
+		vectorFour.addLast(7);
+		
+		vectorFour.print();
+	}
+
 	public static void vectorPractice() {
 		Vector vectorOne = new Vector(120);
 		for(int i = 0; i<100 ;i++){
@@ -414,6 +458,29 @@ public class WPO {
 		System.out.println("size : " + vectorOne.size());
 		
 		//7 Vector double 
+		Vector vectorDoubled = vectorOne.doubled();
+		vectorDoubled.print();
+		System.out.println("size doub : " + vectorDoubled.size());
+
+		//8 Vector interleave
+		Vector vectorThree = new Vector(3);
+		for(int i = 1; i<=3 ;i++){
+			vectorThree.addLast(i);
+		}
+		Vector vectorFour = new Vector(3);
+		for(int i = 4; i<=6 ;i++){
+			vectorFour.addLast(i);
+		}
+
+		Vector vectorInter = vectorThree.interleave(vectorFour);
+		vectorInter.print();
+		vectorThree.print();
+		vectorFour.print();
+
+		//9 extend capacity
+		vectorFour.addLast(7);
+		//vectorFour.print();
+
 	}
 
 }
