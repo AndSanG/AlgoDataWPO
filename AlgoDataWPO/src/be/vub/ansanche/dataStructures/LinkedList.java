@@ -149,8 +149,8 @@ public class LinkedList {
 			last.setRest(null);
 		}	
 	}
-	
-	
+
+	//Used for PriorityQueue
 	public void addSorted(Comparable object) {
 		//an empty list, add element in front 
 		if(head == null) head = new ListElement(object,null);
@@ -167,74 +167,103 @@ public class LinkedList {
 			d.setRest(new ListElement(object,next));
 		}	
 	}
-	
-	public Object getHighPriorityPair(){
-		
+
+	public Comparable getHighPriorityPair(){
+
 		ListElement d = head;
-		Object item = d.first();
+		Comparable item = d.first();
 		if(head != null) {
 			while(d.rest() != null) {
-				if(d.first().compareTo(item)>0) {
+				d = d.rest();
+				if(d.first().compareTo(item)<0 || d.first().compareTo(item)==0) {
 					item = d.first();
 				}
+
 			}
 		}
 		return item;
 	}
-	/*public void removeObject(Comparable object) {
+	/*
+	public void removeObject(Comparable object) {
 		ListElement d = head;
+		Comparable item = object;
 		if(head != null) {
 			while(d.rest() != null) {
-				if(d.first().compareTo(item)==0) {
-					
+				d = d.rest();
+				System.out.println("as");
+				if(d.rest().first()!=null) {
+					if(d.rest().first().compareTo(item)==0 ) {
+						System.out.println("match");
+					}
+				}else {
+
 				}
 			}
+
 		}
+	}*/
+
+
+public void removes(int n) {
+	ListElement d = head;
+	while (n > 1) {
+		d = d.rest();
+		n--;
 	}
-	*/
-	
-	
-	//frople
-	public void fropple() {
+	d.setRest(d.rest().rest());
+}
+/*
+	public void remove(int n) {
 		ListElement d = head;
-		int i = (size() % 2 == 0) ? size() : size() - 1;
-		while(i>1) {
-			if(i-- % 2 == 0) {
-				Comparable temp = d.first();
-				d.setFirst(d.rest().first());
-				d.rest().setFirst(temp);
-			}
+		while (n > 1) {
 			d = d.rest();
+			n--;
 		}
-		
+		d.setRest(d.rest().rest());
+	}*/
+
+
+//frople
+public void fropple() {
+	ListElement d = head;
+	int i = (size() % 2 == 0) ? size() : size() - 1;
+	while(i>1) {
+		if(i-- % 2 == 0) {
+			Comparable temp = d.first();
+			d.setFirst(d.rest().first());
+			d.rest().setFirst(temp);
+		}
+		d = d.rest();
 	}
-	
-	public void append(LinkedList list) {
-		ListElement element = list.head;
-		if(!list.isEmpty() && !this.isEmpty()){
-			while(element.rest() != null){
-				this.addLast(element.first());
-				element = element.rest();
-			}
+
+}
+
+public void append(LinkedList list) {
+	ListElement element = list.head;
+	if(!list.isEmpty() && !this.isEmpty()){
+		while(element.rest() != null){
 			this.addLast(element.first());
+			element = element.rest();
 		}
+		this.addLast(element.first());
 	}
-	
-	public void print(){
-		System.out.println(this.toString());
-	}
-	
-	public String toString() {
-		String s = " ";
-		ListElement d = head;
-		while (d != null) {
-			s += d.first().toString();
-			s += " ";
-			d = d.rest();
-		}
+}
+
+public void print(){
+	System.out.println(this.toString());
+}
+
+public String toString() {
+	String s = " ";
+	ListElement d = head;
+	while (d != null) {
+		s += d.first().toString();
 		s += " ";
-		return s;
+		d = d.rest();
 	}
+	s += " ";
+	return s;
+}
 
 }
 
