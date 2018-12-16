@@ -43,6 +43,15 @@ public class WPO {
 		tree.print();
 	}
 	
+	public static void dictionaryPractice() {
+		Dictionary dictionary = new Dictionary();
+		dictionary.add(1, "asg");
+		dictionary.print();
+		dictionary.add(2, "este");
+		dictionary.add(1, "e");
+		dictionary.print();
+	}
+	
 	public static void lltest() {
 		LinkedList listOne = new LinkedList();
 		listOne.addFirst(6);
@@ -88,7 +97,7 @@ public class WPO {
 		listOne.removeFirst();
 		System.out.println("7) remove first: " + listOne);
 		listOne.removeLast();
-		System.out.println("   remove last : " + listOne);
+		System.out.println("   remove last : " + listOne);// maybe while deadlock
 		LinkedList list1 = new LinkedList();
 		list1.addFirst(3);
 		list1.addFirst(2);

@@ -40,4 +40,18 @@ public class Dictionary
 		}
 		return object;
 	}
+	
+	public void print(){
+		System.out.println(this.toString());
+	}
+	
+	public String toString(){
+		String string = " ";
+		for(int i = 0; i<this.data.size() ;i++){
+			string += data.get(i);
+			string += " ";
+		}
+		string += " ";
+		return string;
+	}
 }

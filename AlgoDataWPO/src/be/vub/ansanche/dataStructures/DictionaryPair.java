@@ -27,4 +27,13 @@ public class DictionaryPair{
 		this.value = value;
 	}
 	
+	public void print(){
+		System.out.println(this.toString());
+	}
+	
+	public String toString(){
+		String string = this.key + " : " + this.value + '\n'; 
+		return string;
+	}
+	
 }
