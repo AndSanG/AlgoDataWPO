@@ -22,25 +22,48 @@ public class WPO {
 
 	public static void binaryTree() {
 		Tree tree = new Tree();
-		tree.insert(8);
-		tree.insert(3);
-		tree.insert(1);
-		tree.insert(6);
-		tree.insert(4);
-		tree.insert(7);
-		tree.insert(10);
-		tree.insert(14);
-		tree.insert(13);
+		boolean flag = true;
+		if(!flag) {
+			tree.insert(8);
+			tree.insert(3);
+			tree.insert(1);
+			tree.insert(6);
+			tree.insert(4);
+			tree.insert(7);
+			tree.insert(10);
+			tree.insert(9);
+			tree.insert(15);
+			tree.insert(13);
+			tree.insert(11);
+			tree.insert(14);
+			tree.insert(16);
+		}else {
+			tree.insert(1);
+			tree.insert(2);
+			tree.insert(3);
+			tree.insert(4);
+			tree.insert(5);
+			tree.insert(6);
+			tree.insert(1);
+		}
+		//tasks 1-5		
+		//tree.printQueue();
+		//tree.printRecursively();
+		//tree.printStack();
 
-		
 		tree.print();
-		System.out.println("Tree depth : " + tree.maxDepth());
-		Object result = tree.biggest();
-		System.out.println("Tree biggest : " + result);
+		//6
+		System.out.println("6 Tree depth : " + tree.maxDepth());
+		//7
+		System.out.println("7 Tree biggest : " + tree.biggest());
 		Object resultSmall = tree.smallest();
-		System.out.println("Tree smallest : " + resultSmall);
+		System.out.println("7 Tree smallest : " + resultSmall);
+		//8
+		
+		//9
 		tree.swapTree();
 		tree.print();
+		//
 	}
 	
 	public static void dictionaryPractice() {

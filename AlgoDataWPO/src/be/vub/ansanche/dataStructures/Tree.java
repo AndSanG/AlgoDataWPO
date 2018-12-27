@@ -65,15 +65,15 @@ public class Tree {
 	{
 		protected Comparable x;
 		protected Comparable y;
-		protected TreeNode left1Node;
-		protected TreeNode left2Node;
-		protected TreeNode right1Node;
-		protected TreeNode right2Node;
+		protected TreeNodeXY left1Node;
+		protected TreeNodeXY left2Node;
+		protected TreeNodeXY right1Node;
+		protected TreeNodeXY right2Node;
 
 
 
-		public TreeNodeXY(Comparable x, Comparable y, TreeNode left1Node, TreeNode left2Node, TreeNode right1Node,
-				TreeNode right2Node) {
+		public TreeNodeXY(Comparable x, Comparable y, TreeNodeXY left1Node, TreeNodeXY left2Node, TreeNodeXY right1Node,
+				TreeNodeXY right2Node) {
 			this.x = x;
 			this.y = y;
 			this.left1Node = left1Node;
@@ -107,19 +107,19 @@ public class Tree {
 			return y;
 		}
 
-		public TreeNode getLeft1Node() {
+		public TreeNodeXY getLeft1Node() {
 			return left1Node;
 		}
 
-		public TreeNode getLeft2Node() {
+		public TreeNodeXY getLeft2Node() {
 			return left2Node;
 		}
 
-		public TreeNode getRight1Node() {
+		public TreeNodeXY getRight1Node() {
 			return right1Node;
 		}
 
-		public TreeNode getRight2Node() {
+		public TreeNodeXY getRight2Node() {
 			return right2Node;
 		}
 
@@ -151,7 +151,7 @@ public class Tree {
 	{
 		insertAtNode(element,root,null);
 	}
-
+	//traverse queue based 
 	public void traverse(TreeAction action)
 	{
 		Queue t = new Queue();
@@ -161,7 +161,6 @@ public class Tree {
 		{
 			TreeNode n = (TreeNode)t.pop();
 			action.run(n);
-
 			if(n.getLeftTree() != null) t.push(n.getLeftTree());
 			if(n.getRightTree() != null) t.push(n.getRightTree());
 		}
@@ -183,6 +182,11 @@ public class Tree {
 			}
 		});
 	}
+	
+	public String toString() {
+		return printRecursively();
+	}
+	
 
 	public int maxDepth() {
 		return maxDepthNode(root);
@@ -269,9 +273,9 @@ public class Tree {
 	{
 		if(n != null)
 		{
+			
+			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action);
 			action.run(n);
-			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action); 
-
 			if(n.getRightTree() != null) traverseNode(n.getRightTree(),action);
 		}
 	}
@@ -304,7 +308,10 @@ public class Tree {
 			Comparable value = current.getValue(); 
 			Comparable leftValue = biggestNode(current.leftNode); 
 			Comparable rightValue = biggestNode(current.rightNode); 
-
+			System.out.println("value      :"+value);
+			System.out.println("leftValue  :"+leftValue);
+			System.out.println("rightValue :"+rightValue);
+			
 			if (leftValue.compareTo(value) > 0) 
 				value = leftValue; 
 			if (rightValue.compareTo(value) > 0) 
@@ -352,12 +359,13 @@ public class Tree {
 		{ 
 
 			Comparable value = current.getX(); 
-			Comparable left1Value = smallestNode(current.left1Node);
-			Comparable left2Value = smallestNode(current.left2Node);
-			Comparable right1Value = smallestNode(current.right1Node);
-			Comparable right2Value = smallestNode(current.right2Node);
+			Comparable left1Value = smallestXNode(current.left1Node);
+			Comparable left2Value = smallestXNode(current.left2Node);
+			Comparable right1Value = smallestXNode(current.right1Node);
+			Comparable right2Value = smallestXNode(current.right2Node);
 
 			Tree tree = new Tree();
+			tree.insert(value);
 			tree.insert(left1Value);
 			tree.insert(left2Value);
 			tree.insert(left1Value);
@@ -367,6 +375,45 @@ public class Tree {
 		} 
 	}
 
+	//Extra work 
+	public String printRecursively(){
+		return printNodeRecur(root);
+	}
+	
+	public String printNodeRecur(TreeNode n) {
+		String string = new String();
+		if (n!=null) {
+			printNodeRecur(n.rightNode);
+			string += n.value;
+			//System.out.println(n.value);
+			printNodeRecur(n.leftNode);
+			
+		}
+		return string;
+	}
+	
+	public void printStack() {
+		Stack t = new Stack (); t.push(root);
+		while (!t.isEmpty())
+		{
+			TreeNode n = (TreeNode)t.pop(); 
+			System.out.println(n.value);  
+			if(n.getLeftTree() != null) t.push(n.getLeftTree());
+			if(n.getRightTree() != null) t.push(n.getRightTree());
+		}
+	}
+	
+	public void printQueue() {
+		Queue t = new Queue (); t.push(root);
+		while (!t.isEmpty())
+		{
+			TreeNode n = (TreeNode)t.pop(); 
+			System.out.println(n.value);  
+			if(n.getRightTree() != null) t.push(n.getRightTree());
+			if(n.getLeftTree() != null) t.push(n.getLeftTree());
+			
+		}
+	}
 
 }
 
