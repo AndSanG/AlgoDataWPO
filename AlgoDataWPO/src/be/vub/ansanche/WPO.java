@@ -6,20 +6,49 @@ import be.vub.ansanche.dataStructures.*;
 
 public class WPO {
 	
-	public static void matrixGraph() {
-		MatrixGraph graph = new MatrixGraph(6);
-		graph.addEdge(1, 2, 1);
-		graph.addEdge(1, 4, 1);
-		graph.addEdge(2, 5, 1);
-		graph.addEdge(4, 2, 1);
-		graph.addEdge(5, 4, 1);
-		graph.addEdge(3, 5, 1);
-		graph.addEdge(3, 6, 1);
-		graph.addEdge(6, 6, 1);
-	
+	public static void graph() {
+		Graph graph = new Graph();
+		graph.addNode('A');
+		graph.addNode('B');
+		graph.addNode('C');
+		graph.addNode('D');
+		//change the order of the two first to generate a cycle
+		graph.addEdge('A','B',6);
+		graph.addEdge('A','C',5);
+		graph.addEdge('B','D',3);
+		graph.addEdge('B','C',4);
+		graph.addEdge('B','A',9);
+		graph.addEdge('C','D',7);
+		
 		graph.print();
+		System.out.println(graph.findPath('A', 'D'));
 	}
 
+	public static void matrixGraph() {
+		MatrixGraph graph = new MatrixGraph(4);
+		graph.addEdge(0, 1, 6);
+		graph.addEdge(0, 2, 5);
+		graph.addEdge(1, 0, 3);
+		graph.addEdge(1, 2, 4);
+		graph.addEdge(1, 3, 9);
+		graph.addEdge(2, 3, 7);
+		
+		graph.print();
+	}
+	public static void priorityQueueBT() {
+		PriorityQueueBT priorityQueue = new PriorityQueueBT();
+		priorityQueue.push("First", 4);
+		priorityQueue.push("Second", 2);
+		priorityQueue.push("Third", 3);
+		priorityQueue.push("Fourth", 8);
+		priorityQueue.push("Fifth", 1);
+		priorityQueue.push("Sixth", 4);
+		priorityQueue.push("Seventh", 3);
+		priorityQueue.print();
+		System.out.println("pop : " +  priorityQueue.pop().toString());
+
+		//priorityQueue.print();
+	}
 	public static void binaryTree() {
 		Tree tree = new Tree();
 		boolean flag = true;

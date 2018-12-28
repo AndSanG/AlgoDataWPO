@@ -33,6 +33,10 @@ public class Matrix {
 		return (Comparable) rowVector.get(col);
 	} 
 	
+	public void print(){
+		System.out.println(this.toString());
+	}
+	
 	public String toString(){
 		String string = "";
 		for (int i = 0; i < nodes; i++) {

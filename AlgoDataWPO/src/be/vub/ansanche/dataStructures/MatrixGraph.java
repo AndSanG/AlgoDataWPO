@@ -9,7 +9,7 @@ public class MatrixGraph {
 	}
 	
 	public void addEdge(int from, int to, double w) {
-		data.set(from-1, to-1, w); 
+		data.set(from, to, w); 
 	}
 	
 	public double getEdge(int from, int to) {
@@ -20,4 +20,7 @@ public class MatrixGraph {
 		System.out.println(data.toString());
 	}
 
+	public String toString(){
+		return data.toString();
+	}
 }
