@@ -34,6 +34,14 @@ public class Graph
 		public Vector getEdges() {
 			return edges;
 		}
+		
+		public boolean isVisited() {
+			return visited;
+		}
+
+		public void setVisited(boolean visited) {
+			this.visited = visited;
+		}
 
 		public String toString(){
 			return info.toString();
@@ -85,7 +93,7 @@ public class Graph
 		for (int i=0; i<nodes.size(); i++)
 		{
 			Node n = (Node)nodes.get(i);
-			if(n.compareTo(new Node(nodeLabel))==0)
+			if(n.getLabel() == nodeLabel)
 			{
 				res = n;
 				break;
@@ -108,24 +116,61 @@ public class Graph
 		Node endState = findNode(nodeLabel2); 
 		Stack toDoList = new Stack (); 
 		Vector path = new Vector(10);
+		
+		//set visited in all nodes to false.
+		setUpGraphNodesStatus(false);
+		
 		toDoList.push(startState); 
 		
 		while(!toDoList.isEmpty()){
-			Node current = (Node)toDoList.pop(); 
-			//System.out.println("current= " + current);
+			Node current = (Node)toDoList.pop();
+			current.visited = true;
 			path.addLast(current);
+			//System.out.println("current= " + current);
+			
 			if (current == endState) 
 				return path; 
 			else{
 				for (int i=0; i<current.edges.size(); i++) {
 					Edge e = (Edge)current.edges.get(i);
-					//System.out.println("push= " + i + " : " + e.toNode);
-					toDoList.push(e.toNode); 
+					if(!e.toNode.isVisited()) {
+						//System.out.println("push= " + i + " : " + e.toNode);
+						toDoList.push(e.toNode); 
+					}
 				}
 			} 
 		}
 
-		return path; }
+		return path; 
+	}
+	
+	private void setUpGraphNodesStatus(boolean status){
+		for (int i = 0; i < nodes.size(); i++) {
+			Node current = (Node) nodes.get(i);
+			current.setVisited(status);
+		}
+	}
+	
+	private void depthFirstSearch(Node current){
+		current.visited = true;
+		for(int i=0;i<current.edges.size();i++) {
+			Edge e = (Edge) current.edges.get(i);
+			Node next = (Node)e.toNode;
+			if(!next.visited) depthFirstSearch(next);
+		}
+		System.out.println(current.info);
+	}
+	public void depthFirstSearch(){
+		setUpGraphNodesStatus(false);
+		for (int i = 0; i < nodes.size(); i++) {
+			Node current = (Node)nodes.get(i);
+			if(!current.visited) depthFirstSearch(current);
+		}
+	}
+	
+	public Vector getNodes() {
+		return nodes;
+	}
 
 	public void print(){
 		System.out.println(this.toString());
