@@ -1,6 +1,9 @@
 package be.vub.ansanche;
 
 import be.vub.ansanche.dataStructures.*;
+import be.vub.ansanche.project.*;
+import be.vub.ansanche.project.ShortestPath.GraphO;
+
 
 
 
@@ -12,16 +15,56 @@ public class WPO {
 		graph.addNode('B');
 		graph.addNode('C');
 		graph.addNode('D');
-		//change the order of the two first to generate a cycle
-		graph.addEdge('A','B',6);
+	
 		graph.addEdge('A','C',5);
-		graph.addEdge('B','D',3);
-		graph.addEdge('B','C',4);
-		graph.addEdge('B','A',9);
+		graph.addEdge('A','B',6);
+		
+		graph.addEdge('B','D',9);
 		graph.addEdge('C','D',7);
 		
+		graph.addEdge('B','A',3);
+		graph.addEdge('B','C',4);
+		
+		
 		graph.print();
-		System.out.println(graph.findPath('A', 'D'));
+		
+		Stack stack = graph.topologicalSorting();
+		stack.print();
+		
+		graph.shortestPath('D');
+		
+	}
+	
+	public static void graph2() {
+		Graph graph = new Graph();
+		graph.addNode('R');
+		graph.addNode('S');
+		graph.addNode('T');
+		graph.addNode('X');
+		graph.addNode('Y');
+		graph.addNode('Z');
+		
+	
+		graph.addEdge('R','S',5);
+		graph.addEdge('R','T',3);
+		graph.addEdge('S','T',2);
+		graph.addEdge('S','X',6);
+		graph.addEdge('T','X',7);
+		graph.addEdge('T','Y',4);
+		graph.addEdge('T','Z',2);
+		graph.addEdge('X','Y',-1);
+		graph.addEdge('X','Z',1);
+		graph.addEdge('Y','Z',-2);
+		
+		
+		
+		graph.print();
+		//graph.depthFirstSearch(new Stack());
+		//graph.topologicalSorting();
+		graph.shortestPath('S');
+		//System.out.println(graph.findPath('A', 'D'));
+		//System.out.println(graph.getNodes());
+		//graph.depthFirstSearch();
 	}
 
 	public static void matrixGraph() {

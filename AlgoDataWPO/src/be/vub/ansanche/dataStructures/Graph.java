@@ -107,9 +107,45 @@ public class Graph
 	{
 		Node n1 = findNode(nodeLabel1);
 		Node n2 = findNode(nodeLabel2);
-		n1.addEdge(new Edge(n2,weight));
+		if(n1!=null && n2!=null) n1.addEdge(new Edge(n2,weight));
 	}
+	
+	public void shortestPath(Comparable source ){
+		//1. topologically sort the vertices of G
+		Stack stack = topologicalSorting(); 
+		
+		//2. Initialize single source  
+		Dictionary dist = new Dictionary();
+		Vector nodes = getNodes();
+		for (int i = 0; i < nodes.size(); i++) {
+			Node node = (Node)nodes.get(i);
+			dist.add(node.getLabel(),100.00);
+		}
+		dist.add(source, 0.00);
+		
+		//3. for each vertex u , taken in topologically sorted order
+		while (stack.isEmpty()==false) {
+			Node uNode = (Node)stack.pop();
 
+			//4. for each vertex v in its Adjacency list  G.Adj(u)
+			Vector edges = uNode.getEdges();
+			for (int i = 0; i < edges.size(); i++) {
+				Edge vEdge = (Edge)edges.get(i);
+				Comparable u = uNode.getLabel();
+				Comparable v = vEdge.toNode.getLabel();
+				double w = vEdge.weight;
+	
+				//5. Relax (u,v,w)
+				if((double)dist.find(v)>(double)dist.find(u) + vEdge.weight) {
+					dist.add(v, (double)dist.find(u) + vEdge.weight);
+				}
+			}
+		}
+		
+		dist.print();//handle the response 
+
+	}
+	
 	public Vector findPath(Comparable nodeLabel1 , Comparable nodeLabel2)
 	{
 		Node startState = findNode(nodeLabel1); 
@@ -144,27 +180,36 @@ public class Graph
 		return path; 
 	}
 	
-	private void setUpGraphNodesStatus(boolean status){
+	public Stack topologicalSorting(){
+		Stack stack = new Stack();
+		depthFirstSearch(stack);
+		return stack;
+	}
+	
+	public void depthFirstSearch(Stack stack){
+		setUpGraphNodesStatus(false);
 		for (int i = 0; i < nodes.size(); i++) {
-			Node current = (Node) nodes.get(i);
-			current.setVisited(status);
+			Node current = (Node)nodes.get(i);
+			if(!current.visited) depthFirstSearch(current,stack);
 		}
 	}
 	
-	private void depthFirstSearch(Node current){
+	private void depthFirstSearch(Node current,Stack stack){
 		current.visited = true;
 		for(int i=0;i<current.edges.size();i++) {
 			Edge e = (Edge) current.edges.get(i);
 			Node next = (Node)e.toNode;
-			if(!next.visited) depthFirstSearch(next);
+			if(!next.visited) depthFirstSearch(next,stack);
 		}
-		System.out.println(current.info);
+		//System.out.println(current.info); //DFS action
+		stack.push(current);
+		
 	}
-	public void depthFirstSearch(){
-		setUpGraphNodesStatus(false);
+	
+	private void setUpGraphNodesStatus(boolean status){
 		for (int i = 0; i < nodes.size(); i++) {
-			Node current = (Node)nodes.get(i);
-			if(!current.visited) depthFirstSearch(current);
+			Node current = (Node) nodes.get(i);
+			current.setVisited(status);
 		}
 	}
 	
