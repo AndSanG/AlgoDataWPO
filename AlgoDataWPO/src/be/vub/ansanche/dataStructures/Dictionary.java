@@ -35,8 +35,9 @@ public class Dictionary
 		Object object = new Object();
 		object = null;
 		int index = findPosition(key);
-		if(index>0) {
-			object = data.get(index);
+		if(index>=0) {
+			DictionaryPair pair = (DictionaryPair)data.get(index);
+			object = pair.getValue();
 		}
 		return object;
 	}
@@ -46,12 +47,12 @@ public class Dictionary
 	}
 	
 	public String toString(){
-		String string = " ";
+		String string = "";
 		for(int i = 0; i<this.data.size() ;i++){
 			string += data.get(i);
-			string += " ";
+			string += "";
 		}
-		string += " ";
+		string += "";
 		return string;
 	}
 }
