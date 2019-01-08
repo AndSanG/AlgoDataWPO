@@ -7,13 +7,16 @@ public class Client implements Comparable<Client> {
 	private String name;
 	private int id;
 	private Basket basket;
+	private ShoppingList shoppingList;
 	private Vector orderHistory;
+
 	
 	public Client(String clientName, int id){
 		this.setName(clientName);
 		this.setId(id);
 		this.basket = new Basket();
 		this.orderHistory = new Vector(10);
+		this.shoppingList = new ShoppingList();
 	}
 	
 	public Client(int id){
@@ -35,8 +38,7 @@ public class Client implements Comparable<Client> {
 	public int getId() {
 		return id;
 	}
-	// TODO set the id on the builder and do not allow to change form outside
-	// there must be a place where the numbers are stored 
+	
 	public void setId(int id) {
 		this.id = id;
 	}

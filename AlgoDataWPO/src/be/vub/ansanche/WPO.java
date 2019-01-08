@@ -2,7 +2,6 @@ package be.vub.ansanche;
 
 import be.vub.ansanche.dataStructures.*;
 import be.vub.ansanche.project.*;
-import be.vub.ansanche.project.ShortestPath.GraphO;
 
 
 

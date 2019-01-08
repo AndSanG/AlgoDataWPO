@@ -45,7 +45,22 @@ public class GroceryStoreAdmin {
 
 
 
-		//Andres basket
+		//Andres 
+		//shopping list
+		
+		groceryStore.addToShoppingList(6001, 2, 1);
+		
+		groceryStore.addToShoppingList(6002, 3, 1);
+		groceryStore.addToShoppingList(6051, 5, 1);
+		groceryStore.addToShoppingList(6101, 1, 1);
+		groceryStore.addToShoppingList(6151, 1, 1);
+		groceryStore.addToShoppingList(6201, 1, 1);
+		groceryStore.addToShoppingList(6251, 1, 1);
+		groceryStore.printShoppingList(1);
+		groceryStore.removeFromShoppingList(6251, 1, 1);
+		groceryStore.printShoppingList(1);
+		
+		//basket
 		groceryStore.addToBasket(6001, 2, 1);
 		groceryStore.addToBasket(6002, 3, 1);
 		groceryStore.addToBasket(6051, 5, 1);

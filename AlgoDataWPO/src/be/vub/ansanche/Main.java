@@ -8,8 +8,9 @@ public class Main {
 		
 		//WPO.vectorPractice2();
 		//WPO.linkedListPractice();
-		//GroceryStore demo = new GroceryStore();
-		//demo.runDemo();
+		GroceryStoreAdmin demo = new GroceryStoreAdmin();
+		demo.runDemo();
+		//demo.testGraph();
 		//WPO.stackPractice();
 		//WPO.stackPracticeLL();
 		//WPO.queuePractice();
@@ -25,9 +26,8 @@ public class Main {
 		//WPO.priorityQueueBT();
 		//CSVReader.test();
 		//WPO.matrixGraph();	
-		WPO.graph();
-		WPO.graph2();
-		//WPO.graphOTest();
+		//WPO.graph();
+		//WPO.graph2();
 
 		
 	}

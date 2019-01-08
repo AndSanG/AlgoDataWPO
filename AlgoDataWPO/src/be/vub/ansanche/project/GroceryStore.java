@@ -256,23 +256,6 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
-	public void addDepartment(String departmentName) {
-		this.graph.addNode(departmentName);
-		this.departments.addFirst(departmentName);
-	}
-
-	
-	public void connectDepartments(String department1, String department2) {
-		this.graph.addEdge(department1	, department2, 1);
-	}
-
-	
-	public void shortestPath(String department1, String department2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 	public void addToShoppingList(int barcodeId, int count, int customerId) {
 		//search for the product in the list
 		Product product = (Product)searchProduct(barcodeId, shelfProducts).clone();
@@ -298,6 +281,71 @@ public class GroceryStore implements GroceryStoreInterface{
 			//modify the quantity of the product
 			pList.setQuantity(pList.getQuantity()+product.getQuantity());
 		}
+	}
+	
+	public void removeFromShoppingList(int barcodeId, int count, int customerId) {
+
+		//search for the client in the list
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+
+		//get the product 
+		Product listProduct = (Product)searchProduct(barcodeId, client.getShoppingList().getProducts());
+		if(listProduct == null) 
+			return;
+		
+		// control the count
+		if (listProduct.getQuantity()<count) {
+			return;
+		}
+
+		//modify product number if there is less than zero remove from the basket 
+		listProduct.setQuantity(listProduct.getQuantity()-count);
+		if(listProduct.getQuantity()<=0) {
+			client.getShoppingList().removeProduct(listProduct);
+		}
+		
+		Product productInventory = (Product)searchProduct(barcodeId, shelfProducts);
+		productInventory.setQuantity(productInventory.getQuantity()+count);
+
+	}
+	
+	public void printShoppingList(int customerId) {
+		
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
+		
+		System.out.println(client.getName() + "'s Shopping list : ");
+		
+		Vector orderHistory = client.getOrderHistory();
+
+		String header = String.format("%6s %30s %10s %6s %6s ", 
+				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
+		System.out.println("----------------------------------------------------------------");
+		System.out.println(header);
+		System.out.println("----------------------------------------------------------------");
+		System.out.print(" ");
+		client.getShoppingList().getProducts().print();
+		System.out.println("----------------------------------------------------------------");
+		
+	}
+	
+	public void addDepartment(String departmentName) {
+		this.graph.addNode(departmentName);
+		this.departments.addFirst(departmentName);
+	}
+
+	
+	public void connectDepartments(String department1, String department2) {
+		this.graph.addEdge(department1	, department2, 1);
+	}
+
+	
+	public void shortestPath(String department1, String department2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
