@@ -93,7 +93,7 @@ public class Graph
 		for (int i=0; i<nodes.size(); i++)
 		{
 			Node n = (Node)nodes.get(i);
-			if(n.getLabel() == nodeLabel)
+			if(n.getLabel().equals( nodeLabel))
 			{
 				res = n;
 				break;
