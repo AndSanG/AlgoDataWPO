@@ -108,6 +108,24 @@ public interface GroceryStoreInterface {
 	 */
 	void checkout(int customerId);
 	
+	
+	/**
+	 * Connecting 2 departments. Two departments are connected when there is a direct aisle
+	 * between them. 
+	 * 
+	 * @param department1 - name of the first department that will be connected.
+	 * @param department2 - name of the second department that will be connected.
+	 */
+	void connectDepartments(String department1, String department2);
+	
+	/**
+	 * Prints the shortest path between 2 departments. 
+	 * 
+	 * @param department1 - name of the source department.
+	 * @param department2 - name of the destination department.
+	 */
+	void shortestPath(String department1, String department2);
+	
 	/**
 	 * Prints a summary of previous purchases
 	 * 
@@ -115,4 +133,27 @@ public interface GroceryStoreInterface {
 	 */
 	void printShoppingHistory(int customerId);
 	
+	/**
+	 * Adds a product to the shopping list of a specific client. 
+	 * 
+	 * @param barcodeId - the bar code of the product that is added to the shopping list 
+	 * @param count - number of the packages of the product that is added to the shopping list
+	 * @param customerId - the client id that is adding the product to the shopping list
+	 */
+	void addToShoppingList(int barcodeId, int count, int customerId);
+	
+	/**
+	 * Removes all items from the shopping list. 
+	 * 
+	 * @param customerId - the client id for which the shopping list will be cleared.
+	 */
+	void clearShoppingList(int customerId);
+	
+	/**
+	 * Prints optimal path to buy all products from the shopping list 
+	 * 
+	 * @param customerId - the client id for which the shopping list will be cleared.
+	 */
+	void printsOptimalPath(int customerId);
+		
 }
