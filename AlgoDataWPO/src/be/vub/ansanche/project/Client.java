@@ -53,8 +53,16 @@ public class Client implements Comparable<Client> {
 		return orderHistory;
 	}
 
-	public void addOrder(LinkedList order) {
+	public void addOrder(Order order) {
 		this.orderHistory.addFirst(order);
+	}
+	
+	public ShoppingList getShoppingList() {
+		return shoppingList;
+	}
+
+	public void setShoppingList(ShoppingList shoppingList) {
+		this.shoppingList = shoppingList;
 	}
 
 	public boolean equals(Object object) {
