@@ -143,7 +143,7 @@ public class Tree {
 		root = null;
 	}
 
-	public boolean find(Comparable element) {
+	public Comparable find(Comparable element) {
 		return findNode(element, root);
 	}
 
@@ -181,6 +181,7 @@ public class Tree {
 				System.out.println(n.value);
 			}
 		});
+		System.out.println("");
 	}
 	
 	public String toString() {
@@ -259,6 +260,8 @@ public class Tree {
 		else if(element.compareTo(current.value) == 0)
 		{
 			// if the element is already in the tree, what to do?
+			//update/override ?
+			current.value = element;
 		}
 		// if the element is smaller than current, go left
 		else if(element.compareTo(current.value) < 0)
@@ -273,9 +276,9 @@ public class Tree {
 	{
 		if(n != null)
 		{
-			
-			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action);
 			action.run(n);
+			if(n.getLeftTree() != null) traverseNode(n.getLeftTree(),action);
+			
 			if(n.getRightTree() != null) traverseNode(n.getRightTree(),action);
 		}
 	}

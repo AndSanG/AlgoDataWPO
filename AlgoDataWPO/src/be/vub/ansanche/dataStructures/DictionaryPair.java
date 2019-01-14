@@ -1,6 +1,7 @@
 package be.vub.ansanche.dataStructures;
 
-public class DictionaryPair{
+
+public class DictionaryPair implements Comparable{
 	
 	private Comparable key;
 	private Object value;
@@ -9,6 +10,16 @@ public class DictionaryPair{
 		super();
 		this.key = key;
 		this.value = value;
+	}
+	
+	public DictionaryPair(Comparable key) {
+		this(key,null);
+	}
+		
+	
+	public int compareTo(Object object) {
+		DictionaryPair pair = (DictionaryPair) object;
+		return ((Comparable)key).compareTo(pair.key);
 	}
 
 	public Comparable getKey() {
@@ -32,8 +43,8 @@ public class DictionaryPair{
 	}
 	
 	public String toString(){
-		String string = this.key + " : " + this.value + '\n'; 
+		String string = this.key + " : " + this.value ; 
 		return string;
 	}
-	
+
 }
