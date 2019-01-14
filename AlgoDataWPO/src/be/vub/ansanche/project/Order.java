@@ -1,12 +1,12 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.LinkedList;
+import be.vub.ansanche.dataStructures.Vector;
 
 public class Order{
-	private LinkedList order;
+	private Vector order;
 	private double value;
 	
-	public Order(LinkedList order,double value) {
+	public Order(Vector order,double value) {
 		super();
 		this.value = value;
 		this.order = order;

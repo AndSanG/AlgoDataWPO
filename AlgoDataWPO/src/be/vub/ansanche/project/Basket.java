@@ -3,10 +3,10 @@ package be.vub.ansanche.project;
 import be.vub.ansanche.dataStructures.*;
 
 public class Basket {
-	private LinkedList products;
+	private Vector products;
 	
 	public Basket() {
-		this.products = new LinkedList();
+		this.products = new Vector();
 	}
 	
 	public void addProduct(Product product) {
@@ -28,7 +28,7 @@ public class Basket {
 		
 	}
 	
-	public LinkedList getProducts() {
+	public Vector getProducts() {
 		return products;
 	}
 }

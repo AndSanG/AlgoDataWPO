@@ -55,8 +55,8 @@ public class GroceryStoreAdmin {
 		groceryStore.addToShoppingList(6101, 1, 1);
 		groceryStore.addToShoppingList(6151, 1, 1);
 		groceryStore.addToShoppingList(6201, 1, 1);
-		groceryStore.addToShoppingList(6251, 1, 1);
-		groceryStore.printShoppingList(1);
+		groceryStore.addToShoppingList(6251, 3, 1);
+		
 		groceryStore.removeFromShoppingList(6251, 1, 1);
 		groceryStore.printShoppingList(1);
 		

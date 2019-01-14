@@ -5,10 +5,10 @@ import be.vub.ansanche.project.ProductOrder;
 
 public class GroceryStore implements GroceryStoreInterface{
 
-	private LinkedList departments = new LinkedList();
-	private LinkedList shelfProducts = new LinkedList();
-	private LinkedList freshProducts = new LinkedList();
-	private LinkedList clientList = new LinkedList();
+	private Vector departments = new Vector();
+	private Vector shelfProducts = new Vector();
+	private Vector freshProducts = new Vector();
+	private Vector clientList = new Vector();
 	private Queue freshProductsQueue = new Queue();
 	private Queue freshProductsQueueUnatended = new Queue();
 	private Graph graph = new Graph();
@@ -72,7 +72,7 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	}
 
-	public Product searchProduct(int barcodeId, LinkedList list) {
+	public Product searchProduct(int barcodeId, Vector list) {
 		Product product = new Product(barcodeId);
 		for (int i = 0; i < list.size(); i++) {
 
@@ -86,7 +86,7 @@ public class GroceryStore implements GroceryStoreInterface{
 		return null;
 	}
 
-	public Client searchClient(int customerId, LinkedList list) {
+	public Client searchClient(int customerId, Vector list) {
 		Client client = new Client(customerId);
 		for (int i = 0; i < list.size(); i++) {
 			Client c = (Client) list.get(i);
@@ -134,12 +134,11 @@ public class GroceryStore implements GroceryStoreInterface{
 			return;
 
 		System.out.println(client.getName() + "'s basket : ");
-		String header = String.format("%6s %30s %10s %6s %6s ", 
+		String header = String.format("%5s %30s %10s %6s %6s ", 
 				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
 		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
 		System.out.println("----------------------------------------------------------------");
-		System.out.print(" ");
 		System.out.println(client.getBasket().getProducts());
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
@@ -246,7 +245,7 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 		Vector orderHistory = client.getOrderHistory();
 
-		String header = String.format("%6s %30s %10s %6s %6s ", 
+		String header = String.format("%5s %30s %10s %6s %6s ", 
 				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
 		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
@@ -321,12 +320,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 		Vector orderHistory = client.getOrderHistory();
 
-		String header = String.format("%6s %30s %10s %6s %6s ", 
+		String header = String.format("%5s %30s %10s %6s %6s ", 
 				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
 		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
 		System.out.println("----------------------------------------------------------------");
-		System.out.print(" ");
 		client.getShoppingList().getProducts().print();
 		System.out.println("----------------------------------------------------------------");
 		
@@ -362,19 +360,19 @@ public class GroceryStore implements GroceryStoreInterface{
 
 
 	//extra methods 
-	public LinkedList getShelfProducts() {
+	public Vector getShelfProducts() {
 		return shelfProducts;
 	}
 
-	public LinkedList getFreshProducts() {
+	public Vector getFreshProducts() {
 		return freshProducts;
 	}
 
-	public LinkedList getClientList() {
+	public Vector getClientList() {
 		return clientList;
 	}
 
-	public LinkedList getDepartments() {
+	public Vector getDepartments() {
 		return departments;
 	}
 

@@ -1,12 +1,12 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.LinkedList;
+import be.vub.ansanche.dataStructures.Vector;
 
 public class ShoppingList {
-private LinkedList products;
+private Vector products;
 	
 	public ShoppingList() {
-		this.products = new LinkedList();
+		this.products = new Vector();
 	}
 	
 	public void addProduct(Product product) {
@@ -28,7 +28,7 @@ private LinkedList products;
 		
 	}
 	
-	public LinkedList getProducts() {
+	public Vector getProducts() {
 		return products;
 	}
 

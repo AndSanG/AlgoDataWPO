@@ -13,6 +13,10 @@ public class Vector {
 		count = 0;
 		this.capacity = capacity;
 	}
+	public Vector()
+	{
+		this(10);
+	}
 
 	/*
 	 * Basic Operations  
@@ -40,6 +44,14 @@ public class Vector {
 	public void set(int index, Object object)
 	{
 		data[index] = object;
+	}
+	
+	public void remove(int index)
+	{
+		for(int i = index ; i < count ; i++){
+			data[i] = data[i+1];
+		}
+		count --;
 	}
 
 	//Checking whether the vector contains a given element
@@ -153,12 +165,12 @@ public class Vector {
 	}
 	
 	public String toString(){
-		String string = " ";
+		String string = "";
 		for(int i = 0; i<count ;i++){
 			string += data[i];
-			string += " ";
+			string += "";
 		}
-		string += " ";
+		string += "";
 		return string;
 	}
 	
