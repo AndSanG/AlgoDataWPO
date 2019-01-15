@@ -165,7 +165,7 @@ public class Vector {
 	}
 	
 	public String toString(){
-		String string = "";
+		String string = " ";
 		for(int i = 0; i<count ;i++){
 			string += data[i];
 			string += "";

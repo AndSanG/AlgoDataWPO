@@ -21,6 +21,7 @@ public class Tree {
 		protected Comparable value;
 		protected TreeNode leftNode;
 		protected TreeNode rightNode;
+		protected TreeNode parentNode;
 
 		public TreeNode(Comparable v, TreeNode left, TreeNode right)
 		{
@@ -135,8 +136,10 @@ public class Tree {
 	 *  public methods  
 	 */
 	// the root of our tree
-	protected TreeNode root;
-	protected TreeNodeXY rootXY;
+	private TreeNode root;
+	private TreeNodeXY rootXY;
+	
+	private String description;
 
 	public Tree()
 	{
@@ -166,7 +169,7 @@ public class Tree {
 		}
 	}
 
-
+	//traverse recursively
 	public void traverseInOrder(TreeAction action)
 	{
 		traverseNode(root,action);
@@ -178,14 +181,22 @@ public class Tree {
 		{
 			public void run(TreeNode n)
 			{
-				System.out.println(n.value);
+				System.out.print(" " + n.value);
 			}
 		});
 		System.out.println("");
 	}
 	
 	public String toString() {
-		return printRecursively();
+		description = "";
+		traverseInOrder(new TreeAction()
+		{
+			public void run(TreeNode n)
+			{
+				description +=n.value + " ";
+			}
+		});
+		return description;
 	}
 	
 
@@ -214,13 +225,13 @@ public class Tree {
 	 */
 
 
-	private boolean findNode(Comparable element, TreeNode current) {
+	private Comparable findNode(Comparable element, TreeNode current) {
 
 		if (current == null) {
-			return false;
+			return null;
 		}
 		else if (element.compareTo(current.value)==0) {
-			return true;
+			return current.value;
 		}
 		else if (element.compareTo(current.value)<0) {
 			return findNode(element, current.getLeftTree());
@@ -311,9 +322,9 @@ public class Tree {
 			Comparable value = current.getValue(); 
 			Comparable leftValue = biggestNode(current.leftNode); 
 			Comparable rightValue = biggestNode(current.rightNode); 
-			System.out.println("value      :"+value);
-			System.out.println("leftValue  :"+leftValue);
-			System.out.println("rightValue :"+rightValue);
+			//System.out.println("value      :"+value);
+			//System.out.println("leftValue  :"+leftValue);
+			//System.out.println("rightValue :"+rightValue);
 			
 			if (leftValue.compareTo(value) > 0) 
 				value = leftValue; 

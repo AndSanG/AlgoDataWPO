@@ -1,17 +1,22 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.*;
-import be.vub.ansanche.project.ProductOrder;
+import be.vub.ansanche.dataStructures.Graph;
+import be.vub.ansanche.dataStructures.Queue;
+import be.vub.ansanche.dataStructures.Tree;
+import be.vub.ansanche.dataStructures.TreeAction;
+import be.vub.ansanche.dataStructures.Vector;
+import be.vub.ansanche.dataStructures.Tree.TreeNode;
 
 public class GroceryStore implements GroceryStoreInterface{
 
 	private Vector departments = new Vector();
-	private Vector shelfProducts = new Vector();
-	private Vector freshProducts = new Vector();
-	private Vector clientList = new Vector();
+	private Tree shelfProducts = new Tree();
+	private Tree freshProducts = new Tree();
+	private Tree clientList = new Tree();
 	private Queue freshProductsQueue = new Queue();
 	private Queue freshProductsQueueUnatended = new Queue();
 	private Graph graph = new Graph();
+	private float auxiliar  = 0;
 
 	private int clientNumber;
 
@@ -22,19 +27,19 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	public void addProduct(String department, String name, float price, int barcodeId, int count) {
 		Product product = new ShelfProduct(department, name, barcodeId, price, count);
-		shelfProducts.addFirst(product);
+		shelfProducts.insert(product);
 	}
 
 	public void addFreshProduct(String name, float pricePerKg, int barcodeId, float amountInKg) {
 		Product freshProduct = new FreshProduct("Fresh", name, barcodeId, pricePerKg, amountInKg);	
-		freshProducts.addFirst(freshProduct);
+		freshProducts.insert(freshProduct);
 	}
 
 	public int addClient(String name) {
 		this.clientNumber = this.clientNumber + 1;
 		int id = this.clientNumber; 
 		Client client = new Client(name, id);
-		clientList.addFirst(client);
+		clientList.insert(client);
 		return id;
 	}
 
@@ -72,30 +77,14 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	}
 
-	public Product searchProduct(int barcodeId, Vector list) {
-		Product product = new Product(barcodeId);
-		for (int i = 0; i < list.size(); i++) {
-
-			Product p = (Product) list.get(i);
-			boolean comparison = product.compareTo(p)==0;
-			if(comparison) {
-				product = p;
-				return product;
-			}
-		}
-		return null;
+	public Product searchProduct(int barcodeId, Tree list) {
+		Product product = new Product(barcodeId); 	
+		return (Product)list.find(product);
 	}
 
-	public Client searchClient(int customerId, Vector list) {
+	public Client searchClient(int customerId, Tree list) {
 		Client client = new Client(customerId);
-		for (int i = 0; i < list.size(); i++) {
-			Client c = (Client) list.get(i);
-			if(client.equals(c)) {
-				client = c;
-				return client;
-			}
-		}
-		return null;
+		return (Client)list.find(client);
 	}
 
 
@@ -139,7 +128,8 @@ public class GroceryStore implements GroceryStoreInterface{
 		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
 		System.out.println("----------------------------------------------------------------");
-		System.out.println(client.getBasket().getProducts());
+		Tree products = client.getBasket().getProducts();
+		products.print();
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
 		
@@ -147,17 +137,21 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	public float computeBasketPrice(int customerId) {
 		float total = 0;
-
 		Client client = searchClient(customerId, clientList);
 		if(client == null)
 			return 0;
-
-		int n = client.getBasket().getProducts().size();
-		for (int j = 0; j < n; j++) {
-			Product product= (Product) client.getBasket().getProducts().get(j);
-			total += product.getTotalPrice();
-		}
 		
+		client.getBasket().getProducts().traverseInOrder(new TreeAction() {
+			
+			@Override
+			public void run(TreeNode n) {
+				// TODO Auto-generated method stub
+				Product product= (Product) n.getValue();
+				auxiliar += product.getTotalPrice();
+			}
+		});
+		total = auxiliar;
+		auxiliar = 0;
 		return total;
 	}
 
@@ -356,20 +350,6 @@ public class GroceryStore implements GroceryStoreInterface{
 	public void printsOptimalPath(int customerId) {
 		// TODO Auto-generated method stub
 		
-	}
-
-
-	//extra methods 
-	public Vector getShelfProducts() {
-		return shelfProducts;
-	}
-
-	public Vector getFreshProducts() {
-		return freshProducts;
-	}
-
-	public Vector getClientList() {
-		return clientList;
 	}
 
 	public Vector getDepartments() {

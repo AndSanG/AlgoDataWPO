@@ -1,20 +1,21 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.Vector;
+import be.vub.ansanche.dataStructures.Tree;
 
 public class ShoppingList {
-private Vector products;
+private Tree products;
 	
 	public ShoppingList() {
-		this.products = new Vector();
+		this.products = new Tree();
 	}
 	
 	public void addProduct(Product product) {
-		products.addLast(product);
+		products.insert(product);
 	}
 	
 	public void removeProduct(Product product) {
-		
+		System.out.println("remove");
+		/*
 		int code = product.getBarcodeId();
 		product = new Product(code);
 		for (int i = 0; i < products.size(); i++) {
@@ -24,11 +25,11 @@ private Vector products;
 			if(comparison) {
 				products.remove(i);
 			}
-		}
+		}*/
 		
 	}
 	
-	public Vector getProducts() {
+	public Tree getProducts() {
 		return products;
 	}
 

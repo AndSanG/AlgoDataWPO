@@ -1,12 +1,12 @@
 package be.vub.ansanche.project;
 
-import be.vub.ansanche.dataStructures.Vector;
+import be.vub.ansanche.dataStructures.Tree;
 
 public class Order{
-	private Vector order;
+	private Tree order;
 	private double value;
 	
-	public Order(Vector order,double value) {
+	public Order(Tree order,double value) {
 		super();
 		this.value = value;
 		this.order = order;

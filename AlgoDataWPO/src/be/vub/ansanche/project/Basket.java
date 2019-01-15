@@ -3,18 +3,18 @@ package be.vub.ansanche.project;
 import be.vub.ansanche.dataStructures.*;
 
 public class Basket {
-	private Vector products;
+	private Tree products;
 	
 	public Basket() {
-		this.products = new Vector();
+		this.products = new Tree();
 	}
 	
 	public void addProduct(Product product) {
-		products.addLast(product);
+		products.insert(product);
 	}
 	
 	public void removeProduct(Product product) {
-		
+		/*
 		int code = product.getBarcodeId();
 		product = new Product(code);
 		for (int i = 0; i < products.size(); i++) {
@@ -25,10 +25,10 @@ public class Basket {
 				products.remove(i);
 			}
 		}
-		
+		*/
 	}
 	
-	public Vector getProducts() {
-		return products;
+	public Tree getProducts() {
+		return this.products;
 	}
 }
