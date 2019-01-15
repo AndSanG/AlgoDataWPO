@@ -14,18 +14,7 @@ public class Basket {
 	}
 	
 	public void removeProduct(Product product) {
-		/*
-		int code = product.getBarcodeId();
-		product = new Product(code);
-		for (int i = 0; i < products.size(); i++) {
-
-			Product p = (Product) products.get(i);
-			boolean comparison = product.compareTo(p)==0;
-			if(comparison) {
-				products.remove(i);
-			}
-		}
-		*/
+		this.products.remove(product);
 	}
 	
 	public Tree getProducts() {

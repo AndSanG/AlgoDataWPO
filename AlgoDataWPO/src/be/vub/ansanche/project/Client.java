@@ -56,7 +56,7 @@ public class Client implements Comparable<Client> {
 	}
 
 	public void addOrder(Order order) {
-		this.orderHistory.addFirst(order);
+		this.orderHistory.addLast(order);
 	}
 	
 	public ShoppingList getShoppingList() {

@@ -23,18 +23,18 @@ public class Tree {
 		protected TreeNode rightNode;
 		protected TreeNode parentNode;
 
-		public TreeNode(Comparable v, TreeNode left, TreeNode right)
+		public TreeNode(Comparable v, TreeNode left, TreeNode right, TreeNode parent)
 		{
 			value = v;
 			leftNode = left;
 			rightNode = right;
+			parentNode = parent;
 		}
+		
 
 		public TreeNode(Comparable v)
 		{
-			value = v;
-			leftNode = null;
-			rightNode = null;
+			this(v,null,null,null);
 		}
 
 
@@ -48,6 +48,10 @@ public class Tree {
 			return rightNode;
 		}
 
+		public TreeNode getParent()
+		{
+			return parentNode;
+		}
 
 		public Comparable getValue()
 		{
@@ -154,6 +158,49 @@ public class Tree {
 	{
 		insertAtNode(element,root,null);
 	}
+	
+	public void remove(Comparable element) {
+		removeNode(element , root );
+	}
+	
+	private void removeNode(Comparable element ,TreeNode current) {
+		if(current == null) return;
+		else if (element.compareTo(current.value) == 0) {
+			if(current.leftNode == null) transplant(current ,current.rightNode);
+			else if(current.rightNode == null) transplant(current ,current.leftNode); 
+			else {
+				TreeNode y = minNode( current.rightNode ); 
+				if(y.parentNode != current) {
+					transplant (y , y.rightNode );
+					y.rightNode = current.rightNode ; 
+					y.rightNode.parentNode = y;
+				}
+				transplant(current ,y);
+				y.leftNode = current.leftNode ;
+				y.leftNode.parentNode = y ;
+			}
+		}
+		else if (element.compareTo(current.value) < 0) {
+			removeNode(element , current . getLeftTree ());
+		}else removeNode(element , current . getRightTree ());
+	}
+	
+	private void transplant(TreeNode oldNode, TreeNode newNode) {
+		if(oldNode.parentNode == null) root = newNode;
+		else if(oldNode.parentNode.getLeftTree() == oldNode)
+		{
+			oldNode . parentNode . leftNode = newNode ;
+		}
+		else oldNode.parentNode.rightNode = newNode;
+		if(newNode != null) newNode.parentNode = oldNode.parentNode; 
+	}
+	
+	public TreeNode minNode(TreeNode current ) {
+		if(current == null) return null;
+		else if(current.getLeftTree() == null) return current; else return minNode( current . getLeftTree ());
+	}
+	
+	
 	//traverse queue based 
 	public void traverse(TreeAction action)
 	{
@@ -264,6 +311,7 @@ public class Tree {
 				{
 					parent.rightNode = newNode;
 				}
+				newNode . parentNode = parent ;
 			}
 			// the current node is empty and it has no parent, we actually have an empty tree
 			else root = newNode;
