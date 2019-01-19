@@ -62,10 +62,6 @@ public class Graph
 
 		public int compareTo(Object o)
 		{
-			// two edges are equal if they point
-			// to the same node.
-			// this assumes that the edges are
-			// starting from the same node !!!
 			Edge n = (Edge)o;
 			return n.toNode.compareTo(toNode);
 		}
@@ -110,18 +106,36 @@ public class Graph
 		if(n1!=null && n2!=null) n1.addEdge(new Edge(n2,weight));
 	}
 	
-	public void shortestPath(Comparable source ){
+	public void addEdgeBidirectional(Comparable nodeLabel1,
+			Comparable nodeLabel2,double weight)
+	{
+		Node n1 = findNode(nodeLabel1);
+		Node n2 = findNode(nodeLabel2);
+		if(n1!=null && n2!=null) { 
+			n1.addEdge(new Edge(n2,weight));
+			n2.addEdge(new Edge(n1,weight));
+		}
+	}
+	
+	public PathInfo shortestPath(Comparable source ){
+		
 		//1. topologically sort the vertices of G
 		Stack stack = topologicalSorting(); 
 		
 		//2. Initialize single source  
-		Dictionary dist = new Dictionary();
+		DictionaryTree distances = new DictionaryTree();
 		Vector nodes = getNodes();
 		for (int i = 0; i < nodes.size(); i++) {
 			Node node = (Node)nodes.get(i);
-			dist.add(node.getLabel(),100.00);
+			distances.add(node.getLabel(),100.00);// 100 in the position of infinite for practical purposes
 		}
-		dist.add(source, 0.00);
+		distances.add(source, 0.00);
+		
+		DictionaryTree precedents = new DictionaryTree();
+		for (int i = 0; i < nodes.size(); i++) {
+			Node node = (Node)nodes.get(i);
+			precedents.add(node.getLabel(),"");
+		}
 		
 		//3. for each vertex u , taken in topologically sorted order
 		while (stack.isEmpty()==false) {
@@ -136,14 +150,15 @@ public class Graph
 				double w = vEdge.weight;
 	
 				//5. Relax (u,v,w)
-				if((double)dist.find(v)>(double)dist.find(u) + vEdge.weight) {
-					dist.add(v, (double)dist.find(u) + vEdge.weight);
+				if((double)distances.find(v)>(double)distances.find(u) + vEdge.weight) {
+					distances.add(v, (double)distances.find(u) + vEdge.weight);
+					precedents.add(v, u);
+
 				}
 			}
 		}
 		
-		dist.print();//handle the response 
-
+		return new PathInfo(distances, precedents);
 	}
 	
 	public Vector findPath(Comparable nodeLabel1 , Comparable nodeLabel2)
