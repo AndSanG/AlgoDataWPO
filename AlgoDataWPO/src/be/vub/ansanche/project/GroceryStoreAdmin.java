@@ -1,5 +1,7 @@
 package be.vub.ansanche.project;
 import be.vub.ansanche.dataStructures.*;
+import be.vub.ansanche.dataStructures.Tree.TreeNode;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,14 +14,10 @@ public class GroceryStoreAdmin {
 
 	public void runDemo() {
 
-		//load Departments
-		loadDepartments();
-		//load Shelf products
-		loadShelfProducts();
-		//Load Fresh products
-		loadFreshProducts();
-		//load CLients
-		loadClients();
+		setupStore();
+		
+		// demo
+		
 		//fresh products Orders 
 		groceryStore.requestFreshProduct(5101, 5, 1);
 		groceryStore.requestFreshProduct(5101, 10,2);
@@ -42,99 +40,154 @@ public class GroceryStoreAdmin {
 
 		groceryStore.printUnservedRequests();
 
-
-
-
+		
 		//Andres 
-		//shopping list
 		
+		//First purchase 
+		
+		//fresh Product
+		groceryStore.addToBasket(6001, 2, 1);
+		groceryStore.addToBasket(6002, 3, 1);
+		groceryStore.addToBasket(6051, 5, 1);
+		groceryStore.removeFromBasket(6001, 1, 1);
+		groceryStore.checkout(1);
+		
+		//Second purchase
 		groceryStore.addToShoppingList(6001, 2, 1);
-		
 		groceryStore.addToShoppingList(6002, 3, 1);
 		groceryStore.addToShoppingList(6051, 5, 1);
 		groceryStore.addToShoppingList(6101, 1, 1);
 		groceryStore.addToShoppingList(6151, 1, 1);
-		groceryStore.addToShoppingList(6201, 1, 1);
+		groceryStore.addToShoppingList(6152, 2, 1);
 		groceryStore.addToShoppingList(6251, 3, 1);
 		
-		groceryStore.removeFromShoppingList(6251, 1, 1);
+		groceryStore.removeFromShoppingList(6251, 3, 1);
+		groceryStore.removeFromShoppingList(6051, 1, 1);
+		
 		groceryStore.printShoppingList(1);
 		
-		//basket
-		groceryStore.addToBasket(6001, 2, 1);
-		groceryStore.addToBasket(6002, 3, 1);
-		groceryStore.addToBasket(6051, 5, 1);
-		groceryStore.removeFromBasket(6001, 1, 1);
+		groceryStore.printsOptimalPath(1);
+		
+		Tree shoppingList = groceryStore.getShoppingList(1);
+		shoppingList.traverseInOrder(new TreeAction() {
+			
+			@Override
+			public void run(TreeNode n) {
+				
+				Product product = (Product) n.getValue();
+					groceryStore.addToBasket(product.getBarcodeId(), (int)(product.getQuantity()), 1);
+			}
+		});
+		
 		groceryStore.checkout(1);
 		
 		groceryStore.printShoppingHistory(1);
 		
-		groceryStore.addToBasket(6001, 2, 1);
-		groceryStore.addToBasket(6002, 3, 1);
-		groceryStore.addToBasket(6051, 5, 1);
-		groceryStore.removeFromBasket(6001, 1, 1);
-		groceryStore.checkout(1);
 		
-		groceryStore.printShoppingHistory(1);
-		
-		/*
 
 
 		//Michael basket
-		groceryStore.addToBasket(6101, 2, 2);
-		groceryStore.addToBasket(6102, 3, 2);
-		groceryStore.addToBasket(6151, 5, 2);
-		groceryStore.addToBasket(6152, 1, 2);
-		groceryStore.addToBasket(6153, 3, 2);
-		groceryStore.addToBasket(6201, 1, 2);
-		groceryStore.removeFromBasket(6152, 1, 2);
+		
+		groceryStore.addToShoppingList(6001, 2, 2);
+		groceryStore.addToShoppingList(6051, 5, 2);
+		groceryStore.addToShoppingList(6101, 1, 2);
+		groceryStore.addToShoppingList(6151, 1, 2);
+		groceryStore.addToShoppingList(6202, 3, 2);
+		groceryStore.addToShoppingList(6251, 3, 2);
+		
+		groceryStore.printShoppingList(2);
+		
+		groceryStore.printsOptimalPath(2);
+		
+		Tree shoppingList2 = groceryStore.getShoppingList(2);
+		shoppingList2.traverseInOrder(new TreeAction() {
+			
+			@Override
+			public void run(TreeNode n) {
+				
+				Product product = (Product) n.getValue();
+					groceryStore.addToBasket(product.getBarcodeId(), (int)(product.getQuantity()), 2);
+			}
+		});
+		
 		groceryStore.checkout(2);
-
-
-		//Anna basket
-		groceryStore.addToBasket(6201, 12, 3);
-		groceryStore.addToBasket(6203, 4, 3);
-		groceryStore.addToBasket(6251, 1, 3);
-		groceryStore.addToBasket(6252, 1, 3);
-		groceryStore.removeFromBasket(6201, 3, 3);
-		groceryStore.addToBasket(6253, 1, 3);
-		groceryStore.removeFromBasket(6203, 2, 3);
-		groceryStore.checkout(3);
-
+		
+		groceryStore.printShoppingHistory(2);
+		
 
 		//Paulina Basket
-		groceryStore.addToBasket(6301, 5, 4);
-		groceryStore.addToBasket(6302, 3, 4);
-		groceryStore.addToBasket(6303, 5, 4);
-		groceryStore.addToBasket(6351, 2, 4);
-		groceryStore.addToBasket(6352, 1, 4);
-		groceryStore.addToBasket(6353, 1, 4);
-		groceryStore.removeFromBasket(6301, 1, 4);
+		
+		groceryStore.addToShoppingList(6051, 5, 4);
+		groceryStore.addToShoppingList(6202, 3, 4);
+		
+		groceryStore.printShoppingList(4);
+		
+		groceryStore.printsOptimalPath(4);
+		
+		Tree shoppingList3 = groceryStore.getShoppingList(4);
+		shoppingList3.traverseInOrder(new TreeAction() {
+			
+			@Override
+			public void run(TreeNode n) {
+				
+				Product product = (Product) n.getValue();
+					groceryStore.addToBasket(product.getBarcodeId(), (int)(product.getQuantity()), 4);
+			}
+		});
+		
 		groceryStore.checkout(4);
-
-		//Greg Basket
-		groceryStore.addToBasket(6452, 32, 5);
-		groceryStore.addToBasket(6451, 4, 5);
-		groceryStore.checkout(5);
-		*/
 		
-
+		groceryStore.printShoppingHistory(4);
+		
+		System.out.println("Sortesth path among departments \n");
+		
+		System.out.println(groceryStore.ENTRANCE + " - " + groceryStore.CHECKOUT);
+		groceryStore.shortestPath(groceryStore.ENTRANCE, groceryStore.CHECKOUT);
+		System.out.println("\n");
+		
+		System.out.println("Entrance" + " - " + "FreshProducts");
+		groceryStore.shortestPath("Entrance", "FreshProducts");
+		System.out.println("\n");
+		
+		System.out.println("FreshProducts" + " - " + "Vegetables");
+		groceryStore.shortestPath("FreshProducts", "Vegetables");
+		System.out.println("\n");
+		
+		System.out.println("FreshProducts" + " - " + "Checkout");
+		groceryStore.shortestPath("FreshProducts", "Checkout");
+		System.out.println("\n");
+		
+		System.out.println("Cereals" + " - " + "Fruits");
+		groceryStore.shortestPath("Cereals", "Fruits");
+		System.out.println("\n");
 
 	}
-	public void testGraph() {
+	
+	public void setupStore(){
+		//load departments
 		loadDepartments();
-		loadConnections();
-		groceryStore.getGraph().print();
 		
-		System.out.println(groceryStore.getGraph().topologicalSorting());
+		//load Shelf products
+		loadShelfProducts();
+		
+		//Load Fresh products
+		loadFreshProducts();
+		
+		//load CLients
+		loadClients();
+		
+		// load the rest of the grocery infrastructure 
+		groceryStore.addDepartment(groceryStore.ENTRANCE);
+		groceryStore.addDepartment(groceryStore.FRESHPRODUCTS);
+		groceryStore.addDepartment(groceryStore.CHECKOUT);
+		
+		//load Departments Graph
+		loadDepartmentsGraph();
 	}
+	
 
 	public void loadDepartments() {
 		loadDepartments("src/Departments.csv");
-		//groceryStore.addDepartment("Entrance");
-		//groceryStore.addDepartment("FreshProducts");
-		//groceryStore.addDepartment("Checkout");
-		
 	}
 
 	private void loadDepartments(String FilePath) {
@@ -144,42 +197,38 @@ public class GroceryStoreAdmin {
 			groceryStore.addDepartment(department[0]);
 		} 
 	}
-	private void loadConnections() { 
-		
+	
+	private void loadDepartmentsGraph() { 
+		//Entrance
 		groceryStore.connectDepartments("Entrance","CannedProducts");
-		groceryStore.connectDepartments("Entrance","Cereals");
 		
+		//CannedProducts
+		groceryStore.connectDepartments("CannedProducts","Cereals");
+		groceryStore.connectDepartments("CannedProducts","DairyProducts");
+		
+		//Cereals
+		groceryStore.connectDepartments("Cereals","DairyProducts");
+		groceryStore.connectDepartments("Cereals","FreshProducts");
+
+		//FreshProducts
+		groceryStore.connectDepartments("FreshProducts","DairyProducts");
+		
+		//DairyProducts
+		groceryStore.connectDepartments("DairyProducts","Breads&Fluor");
 		groceryStore.connectDepartments("DairyProducts","Fruits");
 		
-		groceryStore.connectDepartments("FrozenProducts","FreshProducts");
-		groceryStore.connectDepartments("FrozenProducts","Checkout");
 		
-		groceryStore.connectDepartments("Breads&Fluor","FrozenProducts");
-		groceryStore.connectDepartments("Breads&Fluor","DairyProducts");
-		groceryStore.connectDepartments("Breads&Fluor","Checkout");
+		//Breads&Fluor
+		groceryStore.connectDepartments("Breads&Fluor","Vegetables");
 		
-		groceryStore.connectDepartments("Cereals","Breads&Fluor");
-		groceryStore.connectDepartments("Cereals","Alcohol");
-		groceryStore.connectDepartments("Cereals","FreshProducts");
-		groceryStore.connectDepartments("Cereals","Checkout");
 		
-		groceryStore.connectDepartments("Clean&Home","Cereals");
-		groceryStore.connectDepartments("Clean&Home","Drinks");
+		//Vegetables
+		groceryStore.connectDepartments("Vegetables","Fruits");
+		groceryStore.connectDepartments("Vegetables","Checkout");
 		
-		groceryStore.connectDepartments("CannedProducts","Clean&Home");
-		groceryStore.connectDepartments("CannedProducts","Cereals");
-		groceryStore.connectDepartments("CannedProducts","Checkout");
-		
-		groceryStore.connectDepartments("Fruits","Vegetables");
-		
-		groceryStore.connectDepartments("Vegetables","Breads&Fluor");
-		
-		groceryStore.connectDepartments("Drinks","Alcohol");
-		
-		groceryStore.connectDepartments("Alcohol","Vegetables");
-		
-		groceryStore.connectDepartments("FreshProducts","Checkout");
-		
+		//Fruits
+		groceryStore.connectDepartments("Fruits","Breads&Fluor");
+		groceryStore.connectDepartments("Fruits","Checkout");
 		
 	}
 

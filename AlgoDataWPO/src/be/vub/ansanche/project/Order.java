@@ -14,7 +14,7 @@ public class Order{
 	public String toString() {
 		String order = this.order.toString();
 		order += '\n' + "                                                 "
-				+ ""+"Total: " + this.value + '\n' + '\n';
+				+ ""+"Total: " + this.value + "\n\n" ;
 				//this.getId() + " " + this.getName() + '\n';
 		return order;
 	}

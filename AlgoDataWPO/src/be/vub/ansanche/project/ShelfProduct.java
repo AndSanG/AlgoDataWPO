@@ -46,7 +46,7 @@ public class ShelfProduct extends Product {
 	
 	public String toString() {
 		
-		String product =  String.format("%5s %30s %10s %6.2f %6.2f \n", 
+		String product =  String.format("%5s %30s %10s %6.2f %6.2f", 
 				this.getBarcodeId(), "{"+this.getDepartment()+"}  " + this.getName(), this.getCount(), getPrice(), this.getTotalPrice());
 		
 		return product;

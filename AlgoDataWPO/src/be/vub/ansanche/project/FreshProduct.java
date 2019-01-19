@@ -45,7 +45,7 @@ public class FreshProduct extends Product{
 	}
 	
 	public String toString() {
-		String product =	String.format("%5s %30s %8.2fKg %6.2f %6.2f \n", 
+		String product =	String.format("%5s %30s %8.2fKg %6.2f %6.2f", 
 							"~"+this.getBarcodeId(), this.getName(), this.getAmountInKg(), getPricePerKg(), this.getTotalPrice());
 				
 		return product;

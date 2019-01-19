@@ -228,7 +228,7 @@ public class Tree {
 		{
 			public void run(TreeNode n)
 			{
-				System.out.print(" " + n.value);
+				System.out.print(" " + n.value + " \n");
 			}
 		});
 		System.out.println("");
@@ -240,7 +240,7 @@ public class Tree {
 		{
 			public void run(TreeNode n)
 			{
-				description +=n.value + " ";
+				description +=n.value + " \n";
 			}
 		});
 		return description;

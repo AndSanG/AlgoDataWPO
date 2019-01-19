@@ -1,7 +1,12 @@
 package be.vub.ansanche.project;
 
+import be.vub.ansanche.dataStructures.DictionaryPair;
+import be.vub.ansanche.dataStructures.DictionaryTree;
 import be.vub.ansanche.dataStructures.Graph;
+import be.vub.ansanche.dataStructures.Graph.Node;
+import be.vub.ansanche.dataStructures.PathInfo;
 import be.vub.ansanche.dataStructures.Queue;
+import be.vub.ansanche.dataStructures.Stack;
 import be.vub.ansanche.dataStructures.Tree;
 import be.vub.ansanche.dataStructures.TreeAction;
 import be.vub.ansanche.dataStructures.Vector;
@@ -9,6 +14,10 @@ import be.vub.ansanche.dataStructures.Tree.TreeNode;
 
 public class GroceryStore implements GroceryStoreInterface{
 
+	public static final String ENTRANCE = "Entrance";
+	public static final String CHECKOUT = "Checkout";
+	public static final String FRESHPRODUCTS = "FreshProducts";
+	
 	private Vector departments = new Vector();
 	private Tree shelfProducts = new Tree();
 	private Tree freshProducts = new Tree();
@@ -128,8 +137,7 @@ public class GroceryStore implements GroceryStoreInterface{
 		System.out.println("----------------------------------------------------------------");
 		System.out.println(header);
 		System.out.println("----------------------------------------------------------------");
-		Tree products = client.getBasket().getProducts();
-		products.print();
+		client.getBasket().getProducts().print();
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
 		
@@ -228,6 +236,8 @@ public class GroceryStore implements GroceryStoreInterface{
 		client.addOrder(order);
 		//remove items form basket 
 		client.setBasket(new Basket());
+		//clear shopping list 
+		clearShoppingList(customerId);
 	}
 
 	public void printShoppingHistory(int customerId) {
@@ -311,8 +321,6 @@ public class GroceryStore implements GroceryStoreInterface{
 			return;
 		
 		System.out.println(client.getName() + "'s Shopping list : ");
-		
-		Vector orderHistory = client.getOrderHistory();
 
 		String header = String.format("%5s %30s %10s %6s %6s ", 
 				"Code", " Product Name", "Quantity ", "P Uni", "Total" );
@@ -321,6 +329,15 @@ public class GroceryStore implements GroceryStoreInterface{
 		System.out.println("----------------------------------------------------------------");
 		client.getShoppingList().getProducts().print();
 		System.out.println("----------------------------------------------------------------");
+		
+	}
+	
+	public Tree getShoppingList(int customerId) {
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return null;
+		
+		return client.getShoppingList().getProducts();
 		
 	}
 	
@@ -333,24 +350,108 @@ public class GroceryStore implements GroceryStoreInterface{
 	public void connectDepartments(String department1, String department2) {
 		this.graph.addEdge(department1	, department2, 1);
 	}
-
 	
-	public void shortestPath(String department1, String department2) {
-		// TODO Auto-generated method stub
+	private Vector createDepartamentList(int customerId) {
 		
+		Vector departmentsToVisit = new Vector();
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return null;
+		
+		client.getShoppingList().getProducts().traverse(new TreeAction() {
+			
+			@Override
+			public void run(TreeNode n) {
+				
+				Product product = (Product)n.getValue();
+				if(departmentsToVisit.contains(product.getDepartment())==null) {
+					departmentsToVisit.addLast(product.getDepartment());
+				}
+		
+			}
+		});
+		return departmentsToVisit;
 	}
-
+	
+	public Vector orderDepartmentList(int customerId) {
+		Vector departmentsToVisit = createDepartamentList(customerId);
+		Vector departmentsOrdered = new Vector();
+		if(departmentsToVisit == null)
+			return null;
+		
+		Stack graphTS = graph.topologicalSorting();
+		departmentsOrdered.addLast(ENTRANCE);
+		while(!graphTS.isEmpty()) {
+			Node node = (Node) graphTS.pop();
+			String department = (String) node.getLabel();
+			if(departmentsToVisit.contains(department) != null) {
+				departmentsOrdered.addLast(department);
+			}
+		}
+		departmentsOrdered.addLast(CHECKOUT);
+		return departmentsOrdered;
+	}
 	
 	public void clearShoppingList(int customerId) {
-		// TODO Auto-generated method stub
+	
+		Client client = searchClient(customerId, clientList);
+		if(client == null)
+			return;
 		
+		client.setShoppingList(new ShoppingList());
 	}
 
 	
 	public void printsOptimalPath(int customerId) {
-		// TODO Auto-generated method stub
+		
+		Vector departmentsOrdered = orderDepartmentList(customerId);
+		if (departmentsOrdered ==null)
+			return;
+		
+		Vector path = new Vector();
+		int n = 0;
+		for (int i = 0; i < departmentsOrdered.size()-1; i++) {
+			
+			Vector route = connectDeps((String)departmentsOrdered.get(i), (String)departmentsOrdered.get(i+1));
+			path.append(route);
+		}
+		path.addLast((String)departmentsOrdered.getLast());
+		
+		Client client = searchClient(customerId, clientList);
+		
+		if(client == null)
+			return;
+		
+		System.out.println(client.getName() + "'s optimal path is :");
+		
+		for (int i = 0; i < path.size(); i++) {
+			String format = String.format("%d %s",i+1, path.get(i));
+			System.out.println(format);
+		}
+		System.out.println("");
 		
 	}
+	
+	public void shortestPath(String department1, String department2) {
+		Vector path = connectDeps(department1, department2);
+		path.addLast(department2);
+		System.out.println(path);
+	}
+	
+	public Vector connectDeps(String department1, String department2) {
+		PathInfo pathInfo = this.graph.shortestPath(department1);
+		DictionaryTree precedents = pathInfo.getPrecedents();
+		
+		Vector path = new Vector();
+		String precedent = (String) precedents.find(department2);
+		while (precedent != precedents.find(department1)) {
+			path.addFirst(precedent);
+			precedent = (String) precedents.find(precedent);
+		}
+		return path;
+	
+	}
+	
 
 	public Vector getDepartments() {
 		return departments;
