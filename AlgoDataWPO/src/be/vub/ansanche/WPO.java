@@ -507,8 +507,22 @@ public class WPO {
 		
 		
 	}
-
 	public static void vectorPractice2() {
+		Vector vectorFour = new Vector(3);
+		for(int i = 4; i<6 ;i++){
+			vectorFour.addLast(i);
+		}
+		vectorFour.print();
+		Vector vectorFive = new Vector(3);
+		for(int i = 7; i<=10 ;i++){
+			vectorFive.addLast(i);
+		}
+		vectorFive.print();
+		vectorFour.append(vectorFive);
+		vectorFour.print();
+		
+	}
+	public static void vectorPractice3() {
 	
 		//9 extend capacity
 		Vector vectorFour = new Vector(3);
@@ -520,7 +534,7 @@ public class WPO {
 		
 		vectorFour.print();
 	}
-
+	
 	public static void vectorPractice() {
 		Vector vectorOne = new Vector(120);
 		for(int i = 0; i<100 ;i++){

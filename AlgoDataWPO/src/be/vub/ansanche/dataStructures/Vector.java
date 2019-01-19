@@ -55,14 +55,24 @@ public class Vector {
 	}
 
 	//Checking whether the vector contains a given element
-	public boolean contains(Object object)
+	/*public boolean contains(Object object)
 	{
 		for(int i=0;i<count;i++)
 		{
 			if(data[i] == object) return true;
 		}
 		return false;
+	}*/
+	
+	public Object contains(Object object)
+	{
+		for(int i=0;i<count;i++)
+		{
+			if(data[i] == object) return object;	
+		}
+		return null;
 	}
+	
 	
 	//add the element at the end of the vector.
 	public void addLast(Object object)
@@ -149,6 +159,12 @@ public class Vector {
 		return vectorInterleave;
 	}
 	
+	public void append(Vector vector){
+		for (int i = 0; i < vector.size(); i++) {
+			addLast(vector.get(i));
+		}
+	}
+	
 	//extend the capacity of the vector to the double
 	private void extendCapacity(){
 		Object dataTemp[] = new Object[capacity*2];
@@ -165,10 +181,10 @@ public class Vector {
 	}
 	
 	public String toString(){
-		String string = " ";
+		String string = "";
 		for(int i = 0; i<count ;i++){
 			string += data[i];
-			string += "";
+			string += " ";
 		}
 		string += "";
 		return string;
