@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"be.vub.ansanche.project","l":"Product"}]

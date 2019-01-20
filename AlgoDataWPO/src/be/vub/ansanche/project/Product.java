@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * Product.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a product in the grocery store
+ * Contains common properties shared between different types of products 
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 public class Product implements Comparable <Product>, Cloneable{

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * WPO.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * Class that test the data structures with information
+ * 
+ ******************************************************************************/
 package be.vub.ansanche;
 
 import be.vub.ansanche.dataStructures.*;

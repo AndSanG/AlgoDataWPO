@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * Matrix.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a vector based matrix
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.dataStructures;
 
 public class Matrix {

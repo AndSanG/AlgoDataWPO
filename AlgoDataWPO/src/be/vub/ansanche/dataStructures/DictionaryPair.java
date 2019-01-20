@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * DictionaryPair.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represent the key value pair implemented in a dictionary 
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.dataStructures;
 
 

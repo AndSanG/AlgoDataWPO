@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * Client.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a client
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 import be.vub.ansanche.dataStructures.*;
@@ -21,6 +32,15 @@ public class Client implements Comparable<Client> {
 	
 	public Client(int id){
 		this("",id);
+	}
+	
+	/**
+	 * Adds a order to the order history 
+	 * 
+	 * @param order represent all the information of an order
+	 */
+	public void addOrder(Order order) {
+		this.orderHistory.addLast(order);
 	}
 	
 	public int compareTo(Client client) {
@@ -53,10 +73,6 @@ public class Client implements Comparable<Client> {
 	
 	public Vector getOrderHistory() {
 		return orderHistory;
-	}
-
-	public void addOrder(Order order) {
-		this.orderHistory.addLast(order);
 	}
 	
 	public ShoppingList getShoppingList() {

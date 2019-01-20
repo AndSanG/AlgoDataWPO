@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * ProductOrder.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represent a fresh product order, provide all the information needed
+ * to serve a fresh product order
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 public class ProductOrder{

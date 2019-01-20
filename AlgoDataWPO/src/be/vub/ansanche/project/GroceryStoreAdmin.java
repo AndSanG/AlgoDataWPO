@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * '
+ * GroceryStoreAdmin.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class creates an instance of GorceryStore and feed all the grocery store 
+ * instance methods with the necessary information to represent a real  
+ * grocery store.
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 import be.vub.ansanche.dataStructures.*;
 import be.vub.ansanche.dataStructures.Tree.TreeNode;
@@ -11,7 +24,9 @@ import java.io.IOException;
 public class GroceryStoreAdmin {
 
 	GroceryStore groceryStore = new GroceryStore();
-
+	
+	/** Starts the grocery store demo
+	*/
 	public void runDemo() {
 
 		setupStore();
@@ -163,6 +178,8 @@ public class GroceryStoreAdmin {
 
 	}
 	
+	/** Initializes all the information needed for the grocery store
+	*/
 	public void setupStore(){
 		//load departments
 		loadDepartments();
@@ -185,19 +202,26 @@ public class GroceryStoreAdmin {
 		loadDepartmentsGraph();
 	}
 	
-
+	/** Reads all the departments from an external file
+	*/
 	public void loadDepartments() {
 		loadDepartments("src/Departments.csv");
 	}
-
-	private void loadDepartments(String FilePath) {
-		Vector departments = readFile(FilePath);
+	
+	/** Reads all the departments
+	 * @param filePath The file that have the products information
+	*/
+	private void loadDepartments(String filePath) {
+		Vector departments = readFile(filePath);
 		for (int i = 0; i < departments.size(); i++) {
 			String[] department = (String[])departments.get(i);
 			groceryStore.addDepartment(department[0]);
 		} 
 	}
 	
+	/** Loads all the infrastructure related information
+	 *  needed to build a graph that represent the grocery store departments 
+	*/
 	private void loadDepartmentsGraph() { 
 		//Entrance
 		groceryStore.connectDepartments("Entrance","CannedProducts");
@@ -232,7 +256,8 @@ public class GroceryStoreAdmin {
 		
 	}
 
-
+	/** Loads the shelf products from a file
+	*/
 	public void loadShelfProducts() {
 		
 		for (int i = 0; i < groceryStore.getDepartments().size(); i++) {
@@ -240,7 +265,10 @@ public class GroceryStoreAdmin {
 			loadProducts(department);
 		}
 	}
-
+	
+	/** Loads the products of a department
+	 * @param department department name
+	*/
 	private void loadProducts(String department) {
 
 		String filePath = String.format("src/%s.csv", department);
@@ -251,9 +279,12 @@ public class GroceryStoreAdmin {
 		} 
 	}
 
-	private Vector readFile(String FilePath) {
+	/** Reads all the departments
+	 * @param filePath The file that have the products information
+	*/
+	private Vector readFile(String filePath) {
 
-		String csvFile = FilePath;
+		String csvFile = filePath;
 		String line = "";
 		String cvsSplitBy = ",";
 		Vector list = new Vector(50);
@@ -274,6 +305,8 @@ public class GroceryStoreAdmin {
 		}
 	}
 
+	/** Loads the fresh products to the grocery store
+	*/
 	public void loadFreshProducts() {
 		groceryStore.addFreshProduct("Beef", 	2.05f, 5101, 20);
 		groceryStore.addFreshProduct("Pork", 	2.65f, 5102, 20);
@@ -283,6 +316,8 @@ public class GroceryStoreAdmin {
 		groceryStore.addFreshProduct("Crab", 	5.55f, 5106, 10);
 	}
 
+	/** Loads the clients of the grocery store
+	*/
 	public void loadClients() {
 		groceryStore.addClient("Andres");
 		groceryStore.addClient("Michael");
@@ -290,7 +325,9 @@ public class GroceryStoreAdmin {
 		groceryStore.addClient("Paulina");
 		groceryStore.addClient("Greg");
 	}
-
+	
+	/** Prints the inventory of the grocery store
+	*/
 	public void printInventory() {
 		System.out.println("Total :" + String.format("%.2f",groceryStore.computeBasketPrice(4))+'\n');
 

@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * FreshProduct.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a shelf product in the grocery store
+ * Contains extends the Product class with particular properties of a fresh product 
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 public class FreshProduct extends Product{

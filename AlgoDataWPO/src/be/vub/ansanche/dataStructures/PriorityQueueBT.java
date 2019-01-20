@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * PriorityQueueBT.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a binary tree based priority queue 
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.dataStructures;
 
 import be.vub.ansanche.dataStructures.PriorityQueue.PriorityPair;

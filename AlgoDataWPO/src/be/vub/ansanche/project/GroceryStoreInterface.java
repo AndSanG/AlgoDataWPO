@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * GroceryStoreInterface.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This Interface contains the methods that must implement a grocery store
+ * 
+ ******************************************************************************/
+
 package be.vub.ansanche.project;
 
 public interface GroceryStoreInterface {

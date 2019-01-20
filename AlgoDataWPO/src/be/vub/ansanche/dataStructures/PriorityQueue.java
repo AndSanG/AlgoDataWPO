@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * PriorityQueue.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a linked list based priority queue
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.dataStructures;
 import java.util.Comparator;
 

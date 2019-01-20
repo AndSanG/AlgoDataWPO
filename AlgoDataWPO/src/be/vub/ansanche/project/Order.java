@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * Order.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represent the information regarding to a purchase in the grocery
+ * store 
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 import be.vub.ansanche.dataStructures.Tree;

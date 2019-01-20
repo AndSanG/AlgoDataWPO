@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * '
+ * DictionaryTree.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class represents a tree based dictionary
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.dataStructures;
 
 public class DictionaryTree {

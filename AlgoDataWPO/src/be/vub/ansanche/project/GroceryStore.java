@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * '
+ * GroceryStore.java
+ * Algorithms and Data Structures
+ * 
+ * Andrés Sánchez
+ * 2019
+ * 
+ * This class implements all the requirements of GroceryStore needed to represent
+ * a grocery store.
+ * 
+ ******************************************************************************/
 package be.vub.ansanche.project;
 
 import be.vub.ansanche.dataStructures.DictionaryPair;
@@ -33,17 +45,40 @@ public class GroceryStore implements GroceryStoreInterface{
 		super();
 		clientNumber = 0;
 	}
-
+	
+	/**
+	 * Adds a product to the store 
+	 * 
+	 * @param department - represents a department to which is the product added
+	 * @param name - represents the name of the new product
+	 * @param price - represents the price of the new product
+	 * @param barcodeId - is the bar-code number of the new product 
+	 * @param count - is the number of items of the new product in the store
+	 */
 	public void addProduct(String department, String name, float price, int barcodeId, int count) {
 		Product product = new ShelfProduct(department, name, barcodeId, price, count);
 		shelfProducts.insert(product);
 	}
 
+	/**
+	 * Adds a fresh product to the store
+	 * 
+	 * @param name - represents the name of the new fresh product
+	 * @param pricePerKg - represents the price of the new fresh product
+	 * @param barcodeId - is the bar-code number of the new fresh product (identifying only the type)
+	 * @param amountInKg - is the amount in kilograms the new fresh product in the store
+	 */
 	public void addFreshProduct(String name, float pricePerKg, int barcodeId, float amountInKg) {
 		Product freshProduct = new FreshProduct("Fresh", name, barcodeId, pricePerKg, amountInKg);	
 		freshProducts.insert(freshProduct);
 	}
 
+	/**
+	 * Registers a new client in the store
+	 * 
+	 * @param name - name of the client
+	 * @return a unique id number identifying the client
+	 */
 	public int addClient(String name) {
 		this.clientNumber = this.clientNumber + 1;
 		int id = this.clientNumber; 
@@ -52,7 +87,14 @@ public class GroceryStore implements GroceryStoreInterface{
 		return id;
 	}
 
-
+	/**
+	 * Adds a product to the basket for a specific client. Make sure you adjust
+	 * the amount of the product that is available at the store for others. 
+	 * 
+	 * @param barcodeId - the bar code of the product that is added to the basket 
+	 * @param count - number of the packages of the product that is added to the basket 
+	 * @param customerId - the client id that is adding the product to the basket
+	 */
 	public void addToBasket(int barcodeId, int count, int customerId) {
 
 		//search for the product in the list
@@ -86,17 +128,34 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	}
 
+	/**
+	 * Search a product in a binary tree list with the barcodeId 
+	 * 
+	 * @param barcodeId - the bar code of the product to search
+	 */
 	public Product searchProduct(int barcodeId, Tree list) {
 		Product product = new Product(barcodeId); 	
 		return (Product)list.find(product);
 	}
 
+	/**
+	 * Search a client in a binary tree list with the customerId 
+	 * 
+	 * @param customerId - the  code of the client to search
+	 */
 	public Client searchClient(int customerId, Tree list) {
 		Client client = new Client(customerId);
 		return (Client)list.find(client);
 	}
 
-
+	/**
+	 * Removes a product to the basket for a specific client. Make sure you adjust
+	 * the amount of the product that is available at the store for others.
+	 * 
+	 * @param barcodeId - the bar code of the product that is removed added from the basket
+	 * @param count - number of the packages of the product that is removed from the basket
+	 * @param customerId - the client id that is removing the product from the basket
+	 */
 	public void removeFromBasket(int barcodeId, int count, int customerId) {
 
 		//search for the client in the list
@@ -124,7 +183,12 @@ public class GroceryStore implements GroceryStoreInterface{
 		productInventory.setQuantity(productInventory.getQuantity()+count);
 
 	}
-
+	
+	/**
+	 * Prints the content of a basket for a specific client
+	 * 
+	 * @param customerId - the client id whose basket will be printed out
+	 */
 	public void printBasket(int customerId) {
 
 		Client client = searchClient(customerId, clientList);
@@ -142,7 +206,13 @@ public class GroceryStore implements GroceryStoreInterface{
 		System.out.println("Total :" + String.format("%.2f",this.computeBasketPrice(customerId))+'\n');
 		
 	}
-
+	
+	/**
+	 * Computes the total price of the basket for a specific client
+	 * 
+	 * @param customerId - the client id whose basket will be printed out
+	 * @return total price of products in the basket
+	 */
 	public float computeBasketPrice(int customerId) {
 		float total = 0;
 		Client client = searchClient(customerId, clientList);
@@ -163,12 +233,28 @@ public class GroceryStore implements GroceryStoreInterface{
 		return total;
 	}
 
-
+	/**
+	 * Requests an amount in kg of the fresh product. If the request is
+	 * successful, it is automatically added to the basket. 
+	 * 
+	 * @param barcodeId - the bar code of the fresh product that is requested by the client
+	 * @param amount - amount in kilograms that is requested by the client
+	 * @param customerId - the client id of the client making the request
+	 */
 	public void requestFreshProduct(int barcodeId, float amount, int customerId) {
 		ProductOrder order = new ProductOrder(barcodeId,amount,customerId);
 		freshProductsQueue.push(order);
 	}
 
+	/**
+	 * Processes the next request in the queue. If the request can be produces
+	 * then it adds the product to the basket. 
+	 * 
+	 * Note: Fresh product cannot be removed from the basket. Once it is
+	 * requested it has to be paid by the client
+	 * 
+	 * @return true if the next request was successfully processed, false otherwise
+	 */
 	public boolean serveNextRequest() {
 
 		if(!(freshProductsQueue.size()>0))
@@ -202,6 +288,9 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 
+	/**
+	 * This method will print currently unserved requests that are waiting to be processed 
+	 */
 	public void printRequests() {
 		if (freshProductsQueue.size()>0) {
 			System.out.println("Fresh Product Queue");
@@ -212,6 +301,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
+	/**
+	 * This method adds a new department to the store
+	 * 
+	 * @param departmentName - is the name of the department that is added to the store
+	 */
 	public void printUnservedRequests() {
 		
 		if (freshProductsQueueUnatended.size()>0) {
@@ -223,6 +317,12 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
+	/**
+	 * Checkouts specified client and prints a bill.
+	 * 
+	 * @param customerId - the client id of the client that checkouts the items from the
+	 *     basket and finalizes the purchase 
+	 */
 	public void checkout(int customerId) {
 		//print the items 
 		printBasket(customerId);
@@ -240,6 +340,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		clearShoppingList(customerId);
 	}
 
+	/**
+	 * Prints a summary of previous purchases
+	 * 
+	 * @param customerId - the client id for which the shopping history will be printed
+	 */
 	public void printShoppingHistory(int customerId) {
 		Client client = searchClient(customerId, clientList);
 		if(client == null)
@@ -259,6 +364,13 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
+	/**
+	 * Adds a product to the shopping list of a specific client. 
+	 * 
+	 * @param barcodeId - the bar code of the product that is added to the shopping list 
+	 * @param count - number of the packages of the product that is added to the shopping list
+	 * @param customerId - the client id that is adding the product to the shopping list
+	 */
 	public void addToShoppingList(int barcodeId, int count, int customerId) {
 		//search for the product in the list
 		Product product = (Product)searchProduct(barcodeId, shelfProducts).clone();
@@ -286,6 +398,13 @@ public class GroceryStore implements GroceryStoreInterface{
 		}
 	}
 	
+	/**
+	 * Removes a product out the shopping list of a specific client. 
+	 * 
+	 * @param barcodeId - the bar code of the product that is added to the shopping list 
+	 * @param count - number of the packages of the product that is added to the shopping list
+	 * @param customerId - the client id that is adding the product to the shopping list
+	 */
 	public void removeFromShoppingList(int barcodeId, int count, int customerId) {
 
 		//search for the client in the list
@@ -314,6 +433,11 @@ public class GroceryStore implements GroceryStoreInterface{
 
 	}
 	
+	/**
+	 * Prints a the client shopping list
+	 * 
+	 * @param customerId - the client id for which the shopping history will be printed
+	 */
 	public void printShoppingList(int customerId) {
 		
 		Client client = searchClient(customerId, clientList);
@@ -332,6 +456,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
+	/**
+	 * Return the shopping list of a client 
+	 * 
+	 * @param customerId - the  code of the client to search
+	 */
 	public Tree getShoppingList(int customerId) {
 		Client client = searchClient(customerId, clientList);
 		if(client == null)
@@ -341,16 +470,33 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
-	public void addDepartment(String departmentName) {
-		this.graph.addNode(departmentName);
-		this.departments.addFirst(departmentName);
+	/**
+	 * 
+	 * @param department - name of the first department that will be added to the graph
+	 * that represents the grocery store
+	 */
+	public void addDepartment(String department) {
+		this.graph.addNode(department);
+		this.departments.addFirst(department);
 	}
 
-	
+	/**
+	 * Connecting 2 departments. Two departments are connected when there is a direct aisle
+	 * between them. 
+	 * 
+	 * @param department1 - name of the first department that will be connected.
+	 * @param department2 - name of the second department that will be connected.
+	 */
 	public void connectDepartments(String department1, String department2) {
 		this.graph.addEdge(department1	, department2, 1);
 	}
 	
+	/**
+	 * Return a list of the departments that the client must visit to collect all the items 
+	 * in its shopping list 
+	 * 
+	 * @param customerId - the  code of the client to search
+	 */
 	private Vector createDepartamentList(int customerId) {
 		
 		Vector departmentsToVisit = new Vector();
@@ -373,6 +519,12 @@ public class GroceryStore implements GroceryStoreInterface{
 		return departmentsToVisit;
 	}
 	
+	/**
+	 * Return a list of the departments that the client must visit to collect all the items 
+	 * in its shopping list ordered according to the bes way to traverse the store
+	 * 
+	 * @param customerId - the  code of the client to search
+	 */
 	public Vector orderDepartmentList(int customerId) {
 		Vector departmentsToVisit = createDepartamentList(customerId);
 		Vector departmentsOrdered = new Vector();
@@ -392,6 +544,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		return departmentsOrdered;
 	}
 	
+	/**
+	 * Removes all items from the shopping list. 
+	 * 
+	 * @param customerId - the client id for which the shopping list will be cleared.
+	 */
 	public void clearShoppingList(int customerId) {
 	
 		Client client = searchClient(customerId, clientList);
@@ -401,7 +558,11 @@ public class GroceryStore implements GroceryStoreInterface{
 		client.setShoppingList(new ShoppingList());
 	}
 
-	
+	/**
+	 * Prints optimal path to buy all products from the shopping list 
+	 * 
+	 * @param customerId - the client id for which the shopping list will be cleared.
+	 */
 	public void printsOptimalPath(int customerId) {
 		
 		Vector departmentsOrdered = orderDepartmentList(customerId);
@@ -432,12 +593,24 @@ public class GroceryStore implements GroceryStoreInterface{
 		
 	}
 	
+	/**
+	 * Prints the shortest path between 2 departments. 
+	 * 
+	 * @param department1 - name of the source department.
+	 * @param department2 - name of the destination department.
+	 */
 	public void shortestPath(String department1, String department2) {
 		Vector path = connectDeps(department1, department2);
 		path.addLast(department2);
 		System.out.println(path);
 	}
 	
+	/**
+	 * return a list with the shortest path between 2 departments. 
+	 * 
+	 * @param department1 - name of the source department.
+	 * @param department2 - name of the destination department.
+	 */
 	public Vector connectDeps(String department1, String department2) {
 		PathInfo pathInfo = this.graph.shortestPath(department1);
 		DictionaryTree precedents = pathInfo.getPrecedents();
@@ -452,15 +625,11 @@ public class GroceryStore implements GroceryStoreInterface{
 	
 	}
 	
-
+	/**
+	 * return a list with the departments. 
+	 */
 	public Vector getDepartments() {
 		return departments;
 	}
-
-	public Graph getGraph() {
-		return graph;
-	}
-
-
 
 }
